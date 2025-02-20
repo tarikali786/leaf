@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { HomeLayout } from "./layouts";
-import { Home } from "./Page";
+import { Home, SignIn, Signup } from "./Page";
 
 function App() {
   return (
@@ -8,6 +8,10 @@ function App() {
       <Route path="/" element={<HomeLayout />}>
         <Route index element={<Home />} />
       </Route>
+      <Route path="signup" element={<Signup />} />
+      <Route path="sign-in" element={<SignIn />} />
+
+      <Route path="*" element={<div>404</div>} />
     </Routes>
   );
 }

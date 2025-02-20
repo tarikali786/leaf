@@ -5,8 +5,8 @@ import ImageComponent from "../../image/ImageComponent";
 import Logo from "../../../assets/Logo3.png";
 export const Footer = () => {
   return (
-    <div className="md:px-[8%] sm:px-[5%] px-2 py-6 text-center md:text-left bg-[var(--color-secondry)] flex justify-between gap-4 flex-wrap pt-10">
-      <div className="flex  flex-col items-center">
+    <div className="md:px-[8%] sm:px-[5%] px-2 py-6 text-center md:text-left bg-[var(--color-secondry)]  flex justify-between  gap-4 flex-wrap pt-10">
+      <div className="flex  flex-col items-center ">
         <ImageComponent
           src={Logo}
           alt="logo"
@@ -17,11 +17,11 @@ export const Footer = () => {
           <InstagramIcon />
           <XIcon />
         </div>
-        <p className="text-gray-700 text-sm text-center">
+        <p className="text-gray-700 text-sm  ">
           2023 all Right Reserved Term of use Halo Leaf
         </p>
       </div>
-      <div className="flex gap-16 flex-wrap ">
+      <div className="flex gap-16 flex-wrap  justify-center">
         <div>
           <h3 className="text-[16px]  font-semibold mb-2">Information</h3>
           <p className="text-sm text-gray-800">About</p>

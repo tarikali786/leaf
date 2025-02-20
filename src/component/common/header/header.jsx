@@ -29,7 +29,11 @@ export const Header = () => {
       </div>
       <div className="flex items-center md:gap-6 sm:gap-4 gap-4">
         <ShoppingCartOutlinedIcon />
-        <PersonOutlineIcon />
+
+        <Link to="/signup">
+          <PersonOutlineIcon />
+        </Link>
+
         <SortIcon className=" rotate-y-180 " />
         <MobileMenu />
       </div>
