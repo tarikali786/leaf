@@ -1,0 +1,13 @@
+.swiper-slide {
+  width: 70%;
+}
+
+@media (max-width: 568px) {
+  .swiper-slide {
+    width: 100%;
+  }
+}
+.swiper-pagination-horizontal {
+  /* bottom: -1rem !important; */
+  display: none;
+}
