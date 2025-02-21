@@ -7,7 +7,7 @@ export const Hero = () => {
     <div className=" md:px-[10%] sm:px-[5%] px-2 py-4 ">
       <div className="  bg-[var(--color-primary)]  rounded-xl md:px-8 md:pt-8 sm:px-4 sm:pt-4 px-4 pt-6  flex md:flex-row  flex-col  gap-6  justify-between  ">
         <div className="md:w-[65%] ">
-          <h1 className="md:text-5xl sm:text-2xl text-xl leading-normal font-bold text-black  ">
+          <h1 className="md:text-5xl sm:text-2xl text-xl leading-[1.3] font-bold text-black  ">
             Sustainable Tableware for a Greener Tomorrow
           </h1>
           <div className="flex gap-6 mt-6">

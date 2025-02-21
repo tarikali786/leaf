@@ -3,8 +3,10 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { HeaderData } from "../../../data";
 import MenuIcon from "@mui/icons-material/Menu";
+import { useSelector } from "react-redux";
 export const MobileMenu = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const activeTab = useSelector((state) => state.leaf.activeTab);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -27,7 +29,17 @@ export const MobileMenu = () => {
       >
         {HeaderData.map((item) => (
           <MenuItem key={item.id} onClick={handleClose}>
-            <a href={item.link}> {item.title}</a>
+            <a
+              href={item.link}
+              className={`${
+                activeTab === item.title
+                  ? "font-semibold text-black  "
+                  : "text-gray-700"
+              } `}
+            >
+              {" "}
+              {item.title}
+            </a>
           </MenuItem>
         ))}
       </Menu>

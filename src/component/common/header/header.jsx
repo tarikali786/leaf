@@ -6,10 +6,18 @@ import SortIcon from "@mui/icons-material/Sort";
 import { HeaderData } from "../../../data";
 import ImageComponent from "../../image/ImageComponent";
 import { MobileMenu } from "./mobileMenu";
+import { useDispatch, useSelector } from "react-redux";
+import { setActiveTab } from "../../../feature/leafSlice";
 
 export const Header = () => {
+  const dispatch = useDispatch();
+  const activeTab = useSelector((state) => state.leaf.activeTab);
+  const handleSetActiveTab = (tab) => {
+    dispatch(setActiveTab(tab));
+  };
+
   return (
-    <div className="md:px-[8%] sm:px-[5%] px-2  flex justify-between gap-4  items-center ">
+    <div className="md:px-[8%] sm:px-[5%] px-2  flex justify-between gap-4  items-center sticky top-0 bg-white w-full z-50 shadow-sm">
       <ImageComponent
         variant="circular"
         src={Logo}
@@ -19,9 +27,14 @@ export const Header = () => {
       <div className="sm:flex items-center md:gap-10 sm:gap-4  gap-2 hidden ">
         {HeaderData.map((item) => (
           <Link
+            onClick={() => handleSetActiveTab(item.title)}
             to={item?.link}
             key={item?.id}
-            className=" md:text-[16px] whitespace-nowrap text-sm text-gray-700"
+            className={`md:text-[16px] whitespace-nowrap text-sm  ${
+              activeTab === item.title
+                ? "font-semibold text-black  "
+                : "text-gray-700"
+            }`}
           >
             {item?.title}
           </Link>
