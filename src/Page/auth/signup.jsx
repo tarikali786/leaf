@@ -1,16 +1,22 @@
 import { useState } from "react";
 import "./style.css";
 import { Link, useNavigate } from "react-router-dom";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import axios from "axios";
 // import { toast } from "react-toastify";
-
+<div className="mt-4"></div>;
 export const Signup = () => {
   const [user, setUser] = useState({
     name: "",
     email: "",
     phone: "",
+    password: "",
+    age: "",
   });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [passwordShown, setPasswordShown] = useState(false);
 
   // Handle form input changes
   const handleChange = ({ target }) => {
@@ -23,20 +29,22 @@ export const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // setLoading(true);
-    // console.log(user);
+    setLoading(true);
 
-    // try {
-    //   const response = await post("/account/account-register/", user);
-    // //   toast.success(response.data.message);
-    //   localStorage.setItem("otpAccessCode", response?.data?.access_token);
-    //   navigate("/verify-otp");
-    // } catch (error) {
-    //   console.error(error);
-    // //   toast.error("An error occurred. Please try again.");
-    // } finally {
-    //   setLoading(false);
-    // }
+    try {
+      const response = await axios.post(
+        "http://localhost:1337/api/auth/signup",
+        { user }
+      );
+      //   toast.success(response.data.message);
+      localStorage.setItem("userAccountid", response?.data?.user?.id);
+      navigate("/verify-otp");
+    } catch (error) {
+      console.error(error);
+      //   toast.error("An error occurred. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -95,13 +103,34 @@ export const Signup = () => {
               </div>
               <div className="mt-4">
                 <label htmlFor="email" className="text-white">
+                  Your Password
+                </label>
+                <div className="w-full flex justify-between border border-white p-2 mt-1 rounded-md outline-[var(--color-secondry)]">
+                  <input
+                    type={passwordShown ? "text" : "password"}
+                    name="password"
+                    value={user?.password}
+                    placeholder="*****"
+                    required
+                    onChange={handleChange}
+                    className="w-full border-none outline-none bg-transparent text-white"
+                  />
+                  {passwordShown ? (
+                    <RemoveRedEyeIcon onClick={() => setPasswordShown(false)} />
+                  ) : (
+                    <VisibilityOffIcon onClick={() => setPasswordShown(true)} />
+                  )}
+                </div>
+              </div>
+              <div className="mt-4">
+                <label htmlFor="email" className="text-white">
                   Your Age
                 </label>
                 <input
-                  type="email"
-                  name="email"
+                  type="number"
+                  name="age"
                   value={user?.email}
-                  placeholder="john@gmail.com"
+                  placeholder="24"
                   required
                   onChange={handleChange}
                   className="w-full border border-white p-2 mt-1 rounded-md outline-[var(--color-secondry)]"

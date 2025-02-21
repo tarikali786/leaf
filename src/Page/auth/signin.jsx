@@ -11,7 +11,6 @@ export const SignIn = () => {
   });
   const [loading, setLoading] = useState(false);
 
-  const navigate = useNavigate();
 
   const OnhandleChange = ({ target }) => {
     const { name, value } = target;
