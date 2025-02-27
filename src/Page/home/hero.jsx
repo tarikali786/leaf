@@ -27,19 +27,12 @@ export const Hero = () => {
           <Search />
         </div>
         <div className="md:relative md:w-[35%]">
-          {/* <div className="md:absolute -left-40 bottom-28">
-          <ImageComponent src={Vector} cardCss="w-[120px] " />
-        </div> */}
           <div className="border  bg-black   w-full bottom-0 rounded-t-full pt-4 ">
             <ImageComponent
               src={Banner}
               cardCss=" md:pt-4 md:pl-8  sm:pl-5 pl-2 w-full md:h-[60vh]"
-
             />
           </div>
-          {/* <div className="absolute  right-4 md:block hidden   top-10 ">
-          <ImageComponent src={Vector2} cardCss="w-[60px]  " />
-        </div> */}
         </div>
       </div>
     </div>

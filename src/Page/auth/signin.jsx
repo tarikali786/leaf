@@ -1,17 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./style.css";
+import TextField from "@mui/material/TextField";
 import { Link, useNavigate } from "react-router-dom";
-// import { post } from "../Helper";
-// import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../../feature/leafSlice";
+import { toast } from "react-toastify";
+import { fetchUserData } from "../../helper/helper";
 
 export const SignIn = () => {
+  const navigate = useNavigate();
   const [loginData, setLoginData] = useState({
-    email: "",
-    password: "",
+    email: "tarikali7444@gmail.com",
+    password: "123",
   });
-  const [loading, setLoading] = useState(false);
+  const { loading } = useSelector((state) => state?.leaf?.user);
 
-
+  useEffect(() => {
+    const { access_leaf } = fetchUserData();
+    if (access_leaf) {
+      navigate("/");
+    }
+  }, []);
+  const dispatch = useDispatch();
   const OnhandleChange = ({ target }) => {
     const { name, value } = target;
     setLoginData((prev) => ({
@@ -22,63 +32,44 @@ export const SignIn = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    
-    // Uncomment this section when API integration is ready
-    // try {
-    //   const res = await post("/account/account-login/", loginData);
-    //   if (res.status === 200) {
-    //     localStorage.setItem("otpAccessCode", res?.data?.access_token);
-    //     toast.success(res?.data?.message);
-    //     navigate("/verify-otp");
-    //   } else {
-    //     toast.error("Something went wrong, try again");
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    //   toast.error("Something went wrong, try again");
-    // } 
-
-    setLoading(false);
+    dispatch(loginUser(loginData))
+      .unwrap()
+      .then((res) => {
+        toast.success("SignIn successful!");
+        navigate("/");
+      })
+      .catch((error) => {
+        toast.error(`${error?.error?.message}` || "SignIn Faild!");
+      });
   };
 
   return (
-    <div className="sign-container flex flex-col items-center">
-      <div className="sm:w-[440px] w-[320px]">
-        <div className="border-2 border-white-400 rounded-xl px-4 py-6 w-full mt-6 form_section">
-          <h2 className="text-2xl text-center text-white font-semibold">
+    <div className=" flex flex-col items-center py-6">
+      <div className=" rounded-xl shadow-2xl sm:w-[440px] w-[320px]">
+        <div className=" px-4 py-6 w-full mt-6 form_section">
+          <h2 className="text-2xl text-center text-black font-semibold">
             Sign In
           </h2>
-          
+
           <form onSubmit={handleSubmit} className="mt-5">
-            <div>
-              <label htmlFor="email" className="text-white font-semibold">
-                Email
-              </label>
-              <input
-                type="email"
-                name="email"
-                value={loginData.email}
-                required
-                placeholder="john@gmail.com"
-                onChange={OnhandleChange}
-                className="w-full border mt-1 border-white-500 p-2 rounded-md outline-[var(--color-primary)]"
-              />
-            </div>
-            <div className="mt-4">
-              <label htmlFor="password" className="text-white font-semibold">
-                Password
-              </label>
-              <input
-                type="password"
-                name="password"
-                value={loginData.password}
-                required
-                placeholder="******"
-                onChange={OnhandleChange}
-                className="w-full border mt-1 border-white-500 p-2 rounded-md outline-[var(--color-primary)]"
-              />
-            </div>
+            <TextField
+              label="Email "
+              variant="filled"
+              className="w-full border   border-white p-2 rounded-md outline-[var(--color-primary)]"
+              name="email"
+              required
+              value={loginData?.email}
+              onChange={OnhandleChange}
+            />
+            <TextField
+              label="Password "
+              variant="filled"
+              className="w-full border  mt-1 border-white"
+              name="password"
+              required
+              value={loginData?.password}
+              onChange={OnhandleChange}
+            />
 
             <button
               type="submit"
@@ -90,8 +81,8 @@ export const SignIn = () => {
               {loading ? "Loading..." : "Sign In"}
             </button>
           </form>
-          <p className="text-white mt-5">
-            Don't have an account? <Link to="/register">Register</Link>
+          <p className="text-black mt-5">
+            Don't have an account? <Link to="/signup">Sign-up</Link>
           </p>
         </div>
       </div>

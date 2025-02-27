@@ -10,10 +10,32 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-color: rgb(21, 52, 11);
 }
 
 .form_section {
-    background-color: transparent;
-    backdrop-filter: blur(55px);
-    background-color: #ffffff23;
-  }
+  background-color: transparent;
+  backdrop-filter: blur(55px);
+  background-color: #ffffff23;
+}
+.MuiAutocomplete-hasPopupIcon.MuiAutocomplete-hasClearIcon.css-1tlcqt-MuiAutocomplete-root
+  .MuiFilledInput-root,
+.css-1pht7va-MuiInputBase-root-MuiFilledInput-root {
+  background-color: transparent !important;
+}
+/* .css-1pht7va-MuiInputBase-root-MuiFilledInput-root::before,
+.css-1vqb5zg-MuiInputBase-root-MuiFilledInput-root::before {
+  border-bottom: none !important;
+} */
+
+/* Chrome, Safari, Edge, Opera */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
