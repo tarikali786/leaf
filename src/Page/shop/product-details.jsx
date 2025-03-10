@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -82,9 +82,9 @@ export const ProductDetails = () => {
         <div>
           <p className="text-gray-800 mt-3 md:text-lg text-sm">
             Avg Customer Rating As our friends and families hover in the kitchen
-            let's remember they are hungering for more than physical food. I
+            lets remember they are hungering for more than physical food. I
             believe the light in a home shines brightest in the kitchen, Let
-            Your Light Shine! - Mary Jo Montanye, Grandma's Simple Cookbook
+            Your Light Shine! - Mary Jo Montanye, Grandmas Simple Cookbook
             Presenting our new pair of serving trays with a unique color
             palette, that looks pretty in💮 All online payment methods are
             accepted. ✅

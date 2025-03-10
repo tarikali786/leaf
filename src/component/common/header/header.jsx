@@ -62,7 +62,9 @@ export const Header = () => {
         ))}
       </div>
       <div className="flex items-center md:gap-6 sm:gap-4 gap-4">
-        <ShoppingCartOutlinedIcon />
+        <Link to="/cart">
+          <ShoppingCartOutlinedIcon />
+        </Link>
 
         {access_leaf ? (
           <>
@@ -81,7 +83,13 @@ export const Header = () => {
               }}
             >
               <MenuItem onClick={handleClose}>
+                <Link to="/profile">Profile</Link>
+              </MenuItem>
+              <MenuItem onClick={handleClose}>
                 <Link to="/order">Order</Link>
+              </MenuItem>
+              <MenuItem onClick={handleClose}>
+                <Link to="/wishlist">Wishlist</Link>
               </MenuItem>
               <MenuItem onClick={handleClose}>
                 <Link onClick={hanldeLogout}>Logout</Link>

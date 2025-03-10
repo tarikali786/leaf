@@ -4,14 +4,17 @@ import { ToastContainer } from "react-toastify";
 
 import {
   Address,
+  Cart,
   ContactUs,
   Home,
   ProductDetails,
+  Profile,
   Shop,
   SignIn,
   Signup,
   Testimonial,
   WhyUs,
+  Wishlist,
 } from "./Page";
 
 function App() {
@@ -23,6 +26,9 @@ function App() {
           <Route path="why-us" element={<WhyUs />} />
           <Route path="testimonials" element={<Testimonial />} />
           <Route path="shop" element={<Shop />} />
+          <Route path="cart" element={<Cart />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="wishlist" element={<Wishlist />} />
           <Route path="product/:id" element={<ProductDetails />} />
           <Route path="contact-us" element={<ContactUs />} />
           <Route path="signup" element={<Signup />} />
