@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Product1 from "../../assets/Frame 7.png";
 import Product2 from "../../assets/Frame 8.png";
 import Product3 from "../../assets/Frame 9.png";
@@ -14,9 +15,12 @@ export const BestSell = () => {
           “Every product at Halo Leaf is designed with the environment in mind.
           Discover how our eco-friendly practices make a difference
         </p>
-        <button className="bg-[var(--color-secondry)] px-2 py-2 rounded-md flex items-center gap-1 mt-4">
+        <Link
+          to="/shop"
+          className="bg-[var(--color-secondry)] w-max px-2 py-2 rounded-md flex items-center gap-1 mt-4"
+        >
           See more <ArrowRightAltIcon />{" "}
-        </button>
+        </Link>
       </div>
       <div>
         <ImageComponent

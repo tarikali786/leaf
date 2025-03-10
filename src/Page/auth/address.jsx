@@ -1,21 +1,26 @@
-import { Link } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import { Autocomplete } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import "./style.css";
+import { useDispatch, useSelector } from "react-redux";
+import { createUserAddress } from "../../feature/leafSlice";
+import { fetchUserData } from "../../helper/helper";
+import { toast } from "react-toastify";
 
 export const Address = () => {
-  const [loading, setLoading] = useState(false);
   const [states, setStates] = useState([]);
-
+  const dispatch = useDispatch();
+  const { id } = fetchUserData();
+  const { loading } = useSelector((state) => state.leaf.user);
   const [userAddress, setUserAddress] = useState({
-    street_address: "",
-    street_address2: "",
-    city: "",
+    address1: "123 Main St",
+    address2: "Suite 1",
+    city: "Sample City",
     state: "",
-    district: "",
-    pin_code: "",
+    district: "Sample District",
+    pin_code: "343455",
+    user_account: id,
   });
 
   const fetchCountryData = async () => {
@@ -43,28 +48,18 @@ export const Address = () => {
     fetchCountryData();
   }, []);
 
-  const createUserAddress = async () => {
-    const api = `/account/create-user-address/`;
-
-    try {
-      const response = "";
-      console.log(response);
-
-      if (response.status == 201) {
-        console.log(response.data);
-      } else {
-        console.error("something went wrong");
-      }
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
   const handleSubmit = (e) => {
-    setLoading(true);
     e.preventDefault();
-    createUserAddress();
+    dispatch(createUserAddress(userAddress))
+      .unwrap()
+      .then((res) => {
+        toast.success("Your Address has been created");
+        console.log(res);
+      })
+      .catch((error) => {
+        toast.error("Something went wrong please try again");
+        console.log(error);
+      });
   };
   return (
     <div className="  py-8  flex flex-col items-center">
@@ -83,7 +78,7 @@ export const Address = () => {
                   className="w-full bg-white rounded"
                   name="street_address"
                   required
-                  value={userAddress?.street_address}
+                  value={userAddress?.address1}
                   onChange={handleOnchange}
                 />
 
@@ -92,7 +87,7 @@ export const Address = () => {
                   variant="filled"
                   className="w-full bg-white rounded"
                   name="street_address2"
-                  value={userAddress?.street_address2}
+                  value={userAddress?.address2}
                   onChange={handleOnchange}
                 />
                 <TextField
@@ -146,7 +141,7 @@ export const Address = () => {
             <div className="flex justify-between mt-6 items-center">
               <button
                 type="submit"
-                className="bg-primary w-full hover:bg-red-500 px-4 py-3 text-white rounded-xl"
+                className="bg-primary w-full hover:bg-green-500 cursor-pointer px-4 py-3 text-white rounded-xl"
               >
                 {loading ? "Processing..." : "Save"}
               </button>

@@ -6,6 +6,7 @@ const initialState = {
   activeTab: "Home",
   user: {
     loading: false,
+    address: [],
   },
 };
 
@@ -21,7 +22,6 @@ export const createUserData = createAsyncThunk(
   }
 );
 
-
 export const loginUser = createAsyncThunk(
   "user/login",
   async (data, { rejectWithValue }) => {
@@ -32,6 +32,18 @@ export const loginUser = createAsyncThunk(
       return response;
     } catch (error) {
       return rejectWithValue(error?.response?.data || "SignIn failed!");
+    }
+  }
+);
+
+export const createUserAddress = createAsyncThunk(
+  "user/address",
+  async (data, { rejectWithValue }) => {
+    try {
+      const res = await post("/addresses", { data: data });
+      return res;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || "Something went wrong!");
     }
   }
 );
@@ -70,6 +82,17 @@ const leafSlice = createSlice({
       storeLeafUser(action.payload);
     });
     builder.addCase(loginUser.rejected, (state, action) => {
+      state.user.loading = false;
+    });
+
+    builder.addCase(createUserAddress.pending, (state, action) => {
+      state.user.loading = true;
+    });
+    builder.addCase(createUserAddress.fulfilled, (state, action) => {
+      state.user.loading = false;
+      state.user.address.push(action.payload);
+    });
+    builder.addCase(createUserAddress.rejected, (state, action) => {
       state.user.loading = false;
     });
   },

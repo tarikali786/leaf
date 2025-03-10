@@ -6,6 +6,7 @@ import {
   Address,
   ContactUs,
   Home,
+  ProductDetails,
   Shop,
   SignIn,
   Signup,
@@ -22,6 +23,7 @@ function App() {
           <Route path="why-us" element={<WhyUs />} />
           <Route path="testimonials" element={<Testimonial />} />
           <Route path="shop" element={<Shop />} />
+          <Route path="product/:id" element={<ProductDetails />} />
           <Route path="contact-us" element={<ContactUs />} />
           <Route path="signup" element={<Signup />} />
           <Route path="sign-in" element={<SignIn />} />

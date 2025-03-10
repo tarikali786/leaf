@@ -10,7 +10,7 @@ import { fetchUserData } from "../../helper/helper";
 export const SignIn = () => {
   const navigate = useNavigate();
   const [loginData, setLoginData] = useState({
-    email: "tarikali7444@gmail.com",
+    email: "adil@gmail.com",
     password: "123",
   });
   const { loading } = useSelector((state) => state?.leaf?.user);
