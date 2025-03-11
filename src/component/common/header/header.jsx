@@ -66,11 +66,11 @@ export const Header = () => {
           <ShoppingCartOutlinedIcon />
         </Link>
 
-        {access_leaf ? (
+        {!access_leaf ? (
           <>
             <Tooltip onClick={handleClick} title={name} placement="top-start">
               <div className="bg-green-600 cursor-pointer rounded-full size-8 font-semibold  text-lg text-white flex items-center justify-center p-2">
-                {name.charAt(0).toUpperCase()}
+                {name?.charAt(0).toUpperCase() ?? "T"}
               </div>
             </Tooltip>
             <Menu
