@@ -9,6 +9,7 @@ import {
   Home,
   ProductDetails,
   Profile,
+  Review,
   Shop,
   SignIn,
   Signup,
@@ -28,6 +29,7 @@ function App() {
           <Route path="shop" element={<Shop />} />
           <Route path="cart" element={<Cart />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="review" element={<Review />} />
           <Route path="wishlist" element={<Wishlist />} />
           <Route path="product/:id" element={<ProductDetails />} />
           <Route path="contact-us" element={<ContactUs />} />

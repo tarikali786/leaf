@@ -8,7 +8,7 @@ import StarsIcon from "@mui/icons-material/Stars";
 import ImageComponent from "../../component/image/ImageComponent";
 import { useMediaQuery } from "@mui/material";
 import { ShopCard } from "./shop-card";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 export const ProductDetails = () => {
   const { id } = useParams();
   const isLg = useMediaQuery("(min-width:968px)"); // Large screens (lg)
@@ -21,7 +21,7 @@ export const ProductDetails = () => {
     { feature: "Feature 4", description: "Description 4" },
   ];
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo(-0, -0);
   }, [id]);
 
   return (
@@ -51,8 +51,15 @@ export const ProductDetails = () => {
             rerum aliquam.
           </p>
           <div className="mt-4">
-            <h5 className=" uppercase  text-sm  font-semibold mb-2 ">
-              Avg Customer Rating
+            <h5 className=" uppercase  text-sm  font-semibold mb-2 flex gap-2 ">
+              Avg Customer Rating{" "}
+              <Link
+                to="/review"
+                onClick={handleWriteReview}
+                className="text-blue-700  capitalize cursor-pointer"
+              >
+                ( Write a review )
+              </Link>
             </h5>
             <div className="flex gap-1">
               {Array.from({ length: Math.round(4.5) }, (_, index) => (
