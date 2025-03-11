@@ -55,7 +55,6 @@ export const ProductDetails = () => {
               Avg Customer Rating{" "}
               <Link
                 to="/review"
-                onClick={handleWriteReview}
                 className="text-blue-700  capitalize cursor-pointer"
               >
                 ( Write a review )
