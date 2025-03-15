@@ -6,6 +6,8 @@ import {
   Address,
   Cart,
   ContactUs,
+  EmailComponent,
+  ForgotPassword,
   Home,
   ProductDetails,
   Profile,
@@ -17,8 +19,21 @@ import {
   WhyUs,
   Wishlist,
 } from "./Page";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { fetchUserDetails } from "./feature/leafSlice";
 
 function App() {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.leaf.user);
+  const id = localStorage.getItem("leafUserid");
+console.log(user);
+
+  // useEffect(() => {
+  //   if (id) {
+  //     dispatch(fetchUserDetails(id));
+  //   }
+  // }, [dispatch]);
   return (
     <>
       <Routes>
@@ -36,6 +51,8 @@ function App() {
           <Route path="signup" element={<Signup />} />
           <Route path="sign-in" element={<SignIn />} />
           <Route path="address" element={<Address />} />
+          <Route path="email" element={<EmailComponent />} />
+          <Route path="forgot-password" element={<ForgotPassword />} />
         </Route>
 
         <Route path="*" element={<div>404</div>} />

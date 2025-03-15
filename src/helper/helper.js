@@ -5,9 +5,8 @@ export const storeLeafUser = (data) => {
   localStorage.setItem(
     "leafUser",
     JSON.stringify({
-      id: data?.user?.id,
-      name: data?.user?.name,
-      access_leaf: data.token,
+      id: data?.user?.documentId,
+      access_leaf: data?.token,
     })
   );
 };

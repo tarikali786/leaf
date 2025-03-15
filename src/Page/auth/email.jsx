@@ -7,7 +7,7 @@ import { loginUser } from "../../feature/leafSlice";
 import { toast } from "react-toastify";
 import { fetchUserData } from "../../helper/helper";
 
-export const SignIn = () => {
+export const EmailComponent = () => {
   const navigate = useNavigate();
   const [loginData, setLoginData] = useState({
     email: "",
@@ -48,7 +48,7 @@ export const SignIn = () => {
       <div className=" rounded-xl shadow-2xl sm:w-[440px] w-[320px]">
         <div className=" px-4 py-6 w-full mt-6 form_section">
           <h2 className="text-2xl text-center text-black font-semibold">
-            Sign In
+            Forgot password
           </h2>
 
           <form onSubmit={handleSubmit} className="mt-5">
@@ -61,18 +61,10 @@ export const SignIn = () => {
               value={loginData?.email}
               onChange={OnhandleChange}
             />
-            <TextField
-              label="Password "
-              variant="filled"
-              className="w-full border  mt-1  border-white"
-              name="password"
-              required
-              value={loginData?.password}
-              onChange={OnhandleChange}
-            />
-            <div className="mt-4 text-sm font-semibold text-blue-500 ml-2">
-              <Link to='/forgot-password'>Forgot Password</Link>
-            </div>
+            <p>
+              We’ll send a verification code to this email or phone number if it
+              matches an existing LinkedIn account.
+            </p>
 
             <button
               type="submit"
@@ -85,7 +77,7 @@ export const SignIn = () => {
             </button>
           </form>
           <p className="text-black mt-5">
-            Don't have an account? <Link to="/signup">Sign-up</Link>
+            Go back <Link to="/login">login</Link>
           </p>
         </div>
       </div>

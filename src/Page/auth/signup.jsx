@@ -127,7 +127,7 @@ export const Signup = () => {
               />
               <button
                 type="submit"
-                className={`bg-primary w-full mt-8 py-3 rounded-xl text-white ${
+                className={`bg-primary cursor-pointer w-full mt-8 py-3 rounded-xl text-white ${
                   loading && "cursor-not-allowed"
                 }`}
               >

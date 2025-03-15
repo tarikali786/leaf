@@ -7,11 +7,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { createUserAddress } from "../../feature/leafSlice";
 import { fetchUserData } from "../../helper/helper";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export const Address = () => {
   const [states, setStates] = useState([]);
   const dispatch = useDispatch();
   const { id } = fetchUserData();
+  const navigate = useNavigate();
+  const uid = localStorage.getItem("leafUserid");
+
   const { loading } = useSelector((state) => state.leaf.user);
   const [userAddress, setUserAddress] = useState({
     address1: "123 Main St",
@@ -20,7 +24,7 @@ export const Address = () => {
     state: "",
     district: "Sample District",
     pin_code: "343455",
-    user_account: id,
+    user_account: id ?? uid,
   });
 
   const fetchCountryData = async () => {
@@ -54,7 +58,7 @@ export const Address = () => {
       .unwrap()
       .then((res) => {
         toast.success("Your Address has been created");
-        console.log(res);
+        navigate("/login");
       })
       .catch((error) => {
         toast.error("Something went wrong please try again");
