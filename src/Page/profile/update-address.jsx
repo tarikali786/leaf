@@ -4,28 +4,44 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import "./style.css";
 import { useDispatch, useSelector } from "react-redux";
-import { createUserAddress } from "../../feature/leafSlice";
+import { createUserAddress, UpdateUserAddress } from "../../feature/leafSlice";
 import { fetchUserData } from "../../helper/helper";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-export const Address = () => {
+export const UpdateAddress = () => {
   const [states, setStates] = useState([]);
   const dispatch = useDispatch();
-  const { id } = fetchUserData();
+  const { documentId } = useParams();
   const navigate = useNavigate();
-  const uid = localStorage.getItem("leafUserid");
+
+  const addresses = useSelector((state) =>
+    state.leaf.user.addresses.find((item) => item.documentId === documentId)
+  );
 
   const { loading } = useSelector((state) => state.leaf.user);
   const [userAddress, setUserAddress] = useState({
-    address1: "123 Main St",
-    address2: "Suite 1",
-    city: "Sample City",
+    address1: "",
+    address2: "",
+    city: "",
     state: "",
-    district: "Sample District",
-    pin_code: "343455",
-    user_account: id ?? uid,
+    district: "",
+    pin_code: "",
   });
+
+  useEffect(() => {
+    if (addresses) {
+      setUserAddress({
+        address1: addresses?.address1 || "",
+        address2: addresses?.address2 || "",
+        city: addresses?.city || "",
+        state: addresses?.state || "",
+        district: addresses?.district || "",
+        pin_code: addresses?.pin_code || "",
+      });
+    }
+  }, [addresses]);
+
 
   const fetchCountryData = async () => {
     try {
@@ -54,25 +70,30 @@ export const Address = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createUserAddress(userAddress))
+    console.log("Sending Data:", { id: documentId, data: userAddress }); // ✅ Debug request
+  
+    dispatch(UpdateUserAddress({ id: documentId, data: userAddress }))
       .unwrap()
       .then((res) => {
-        toast.success("Your Address has been created");
-        navigate("/login");
+        toast.success("Your Address has been updated");
+        navigate("/profile");
       })
       .catch((error) => {
         toast.error("Something went wrong please try again");
-        console.log(error);
+        console.error("API Error:", error);
       });
   };
+
+  
+  
   return (
     <div className="  py-8  flex flex-col items-center">
       <div className="sm:w-[440px]  w-[320px]  ">
-        <div className=" shadow-2xl  rounded-xl px-4 py-6 w-full form_section">
+        <div className=" shadow-2xl  rounded-xl px-4 py-6 w-full ">
           <form onSubmit={handleSubmit}>
             <div>
               <p className="text-2xl text-center mb-6 text-black-400 ">
-                Create Your Delivery Address
+                Update Your Delivery Address
               </p>
 
               <div className="flex flex-col gap-3">

@@ -7,7 +7,6 @@ import { Testimonials } from "./testimonials";
 
 export const Home = () => {
   const leaf = useSelector((state) => state.leaf);
-  console.log(leaf);
 
   return (
     <div className="">
@@ -15,7 +14,6 @@ export const Home = () => {
       <BestSell />
       <About />
       <Categories />
-
       <Testimonials />
     </div>
   );

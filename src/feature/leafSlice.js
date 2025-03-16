@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { get, post } from "./api";
+import { get, post, remove, update } from "./api";
 import { storeLeafUser } from "../helper/helper";
 const initialState = {
   leaf: [],
@@ -12,7 +12,6 @@ const initialState = {
     name: "",
     email: "",
     id: "",
-    token: "",
     phone: "",
   },
 };
@@ -57,12 +56,33 @@ export const createUserAddress = createAsyncThunk(
 
 export const fetchUserDetails = createAsyncThunk("user/details", async (id) => {
   try {
-    const response = await get(`/user-accounts/${id}`);
+    const response = await get(`/user-accounts/${id}?populate=*`);
     return response.data;
   } catch (error) {
     return error;
   }
 });
+
+export const deleteAddress = createAsyncThunk(
+  "user/deleteAddress",
+  async (id) => {
+    const response = await remove(`/addresses/${id}`);
+    return id;
+  }
+);
+export const UpdateUserAddress = createAsyncThunk(
+  "user/UpdateAddress",
+  async ({ id, data }) => {
+    try {
+      const response = await update(`/addresses/${id}`, { data });
+      return response.data;
+    } catch (error) {
+      console.error("API Request Error:", error.response?.data);
+      throw error;
+    }
+  }
+);
+
 const leafSlice = createSlice({
   name: "leaf",
   initialState,
@@ -95,7 +115,7 @@ const leafSlice = createSlice({
 
     builder.addCase(loginUser.fulfilled, (state, action) => {
       state.user.loading = false;
-
+      localStorage.setItem('leafEmail',action.payload?.user.email)
       storeLeafUser(action.payload);
     });
     builder.addCase(loginUser.rejected, (state, action) => {
@@ -120,18 +140,55 @@ const leafSlice = createSlice({
     });
     builder.addCase(fetchUserDetails.fulfilled, (state, action) => {
       state.loading = false;
-      console.log(action.payload);
 
       (state.user.name = action.payload?.name),
         (state.user.email = action.payload?.email),
         (state.user.phone = action.payload?.phone),
         (state.user.id = action.payload?.documentId),
-        (state.user.token = action.payload?.token),
-        state.user.addresses.push(action.payload.addresses);
+        (state.user.addresses = action.payload.addresses);
     });
 
     builder.addCase(fetchUserDetails.rejected, (state, action) => {
       state.loading = false;
+    });
+
+    // delete Address
+
+    builder.addCase(deleteAddress.pending, (state, action) => {
+      state.user.loading = true;
+    });
+
+    builder.addCase(deleteAddress.fulfilled, (state, action) => {
+      state.user.loading = false;
+      state.user.addresses = state.user.addresses.filter(
+        (item) => item.documentId !== action.payload
+      );
+    });
+    builder.addCase(deleteAddress.rejected, (state, action) => {
+      state.user.loading = false;
+    });
+
+    // update address
+    builder.addCase(UpdateUserAddress.pending, (state, action) => {
+      state.user.loading = true;
+    });
+
+    builder.addCase(UpdateUserAddress.fulfilled, (state, action) => {
+      state.user.loading = false;
+      console.log(action.payload);
+      
+      const index = state.user.addresses.findIndex(
+        (address) => address.documentId === action.payload.data.documentId
+      );
+
+      console.log(index);
+
+      if (index !== -1) {
+        state.user.addresses.splice(index, 1, action.payload.data);
+      }
+    });
+    builder.addCase(UpdateUserAddress.rejected, (state, action) => {
+      state.user.loading = false;
     });
   },
 });

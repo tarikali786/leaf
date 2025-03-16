@@ -102,7 +102,6 @@ export const Header = () => {
           </Link>
         )}
 
-        <SortIcon className=" rotate-y-180 " />
         <MobileMenu />
       </div>
     </div>

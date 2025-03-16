@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../feature/leafSlice";
 import { toast } from "react-toastify";
 import { fetchUserData } from "../../helper/helper";
+import { post } from "../../feature/api";
 
 export const SignIn = () => {
   const navigate = useNavigate();
@@ -43,6 +44,7 @@ export const SignIn = () => {
       });
   };
 
+  
   return (
     <div className=" flex flex-col items-center py-6">
       <div className=" rounded-xl shadow-2xl sm:w-[440px] w-[320px]">
@@ -71,7 +73,7 @@ export const SignIn = () => {
               onChange={OnhandleChange}
             />
             <div className="mt-4 text-sm font-semibold text-blue-500 ml-2">
-              <Link to='/forgot-password'>Forgot Password</Link>
+              <Link to='/otp'>Forgot Password</Link>
             </div>
 
             <button

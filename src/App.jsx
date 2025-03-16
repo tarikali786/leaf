@@ -7,6 +7,7 @@ import {
   Cart,
   ContactUs,
   EmailComponent,
+  EnterOTP,
   ForgotPassword,
   Home,
   ProductDetails,
@@ -16,6 +17,7 @@ import {
   SignIn,
   Signup,
   Testimonial,
+  UpdateAddress,
   WhyUs,
   Wishlist,
 } from "./Page";
@@ -27,13 +29,14 @@ function App() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.leaf.user);
   const id = localStorage.getItem("leafUserid");
-console.log(user);
 
-  // useEffect(() => {
-  //   if (id) {
-  //     dispatch(fetchUserDetails(id));
-  //   }
-  // }, [dispatch]);
+  useEffect(() => {
+    if (id) {
+      if (!user.id) {
+        dispatch(fetchUserDetails(id));
+      }
+    }
+  }, [dispatch]);
   return (
     <>
       <Routes>
@@ -46,13 +49,16 @@ console.log(user);
           <Route path="profile" element={<Profile />} />
           <Route path="review" element={<Review />} />
           <Route path="wishlist" element={<Wishlist />} />
+          <Route path="otp" element={<EnterOTP />} />
+          <Route path="address/:documentId" element={<UpdateAddress />} />
+
           <Route path="product/:id" element={<ProductDetails />} />
           <Route path="contact-us" element={<ContactUs />} />
           <Route path="signup" element={<Signup />} />
           <Route path="sign-in" element={<SignIn />} />
           <Route path="address" element={<Address />} />
           <Route path="email" element={<EmailComponent />} />
-          <Route path="forgot-password" element={<ForgotPassword />} />
+          <Route path="forgot-password/:id" element={<ForgotPassword />} />
         </Route>
 
         <Route path="*" element={<div>404</div>} />

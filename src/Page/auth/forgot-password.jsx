@@ -1,85 +1,84 @@
 import { useEffect, useState } from "react";
-import "./style.css";
 import TextField from "@mui/material/TextField";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../../feature/leafSlice";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { toast } from "react-toastify";
-import { fetchUserData } from "../../helper/helper";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import { post } from "../../feature/api";
 
 export const ForgotPassword = () => {
   const navigate = useNavigate();
-  const [loginData, setLoginData] = useState({
-    email: "",
-    password: "",
-  });
-  const { loading } = useSelector((state) => state?.leaf?.user);
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordShown, setPasswordShown] = useState(false);
+  const leafUserid = localStorage.getItem("leafUserid");
+
+
+  
+  const handleResetPassword = async (e) => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match!");
+      return;
+    }
+    try {
+      const data = { documentId: leafUserid, password: password };
+      await post("/auth/update-password", data);
+      toast.success("Password reset successfully!");
+      sessionStorage.removeItem("resetEmail");
+      navigate("/login");
+    } catch (error) {
+      toast.error("Failed to reset password. Please try again.");
+    }
+  };
+
 
   useEffect(() => {
-    const { access_leaf } = fetchUserData();
-    if (access_leaf) {
-      navigate("/");
-    }
+    if (!leafUserid) return (window.location.href = "/sign-in");
   }, []);
-  const dispatch = useDispatch();
-  const OnhandleChange = ({ target }) => {
-    const { name, value } = target;
-    setLoginData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    dispatch(loginUser(loginData))
-      .unwrap()
-      .then((res) => {
-        toast.success("SignIn successful!");
-        navigate("/");
-      })
-      .catch((error) => {
-        toast.error(`${error?.error?.message}` || "SignIn Faild!");
-      });
-  };
 
   return (
-    <div className=" flex flex-col items-center py-6">
-      <div className=" rounded-xl shadow-2xl sm:w-[440px] w-[320px]">
-        <div className=" px-4 py-6 w-full mt-6 form_section">
-          <h2 className="text-2xl text-center text-black font-semibold">
-            Forgot password
-          </h2>
+    <div className="flex flex-col items-center py-6">
+      <div className="rounded-xl shadow-2xl sm:w-[440px] w-[320px] px-4 py-6">
+        <h2 className="text-2xl mb-6 text-center text-black font-semibold">
+          Set New Password
+        </h2>
+        <form onSubmit={handleResetPassword}>
+          <TextField
+            label="New Password"
+            variant="filled"
+            type="password"
+            className="w-full border p-2 rounded-md"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
-          <form onSubmit={handleSubmit} className="mt-5">
+          <div className="w-full flex justify-between items-center  rounded-md outline-[var(--color-secondry)]">
             <TextField
-              label="Email "
+              label="Confirm Password"
               variant="filled"
-              className="w-full border   border-white p-2 rounded-md outline-[var(--color-primary)]"
-              name="email"
+              className="w-full border  mt-1 border-white"
+              name="password"
               required
-              value={loginData?.email}
-              onChange={OnhandleChange}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              type={passwordShown ? "text" : "password"}
             />
-            <p>
-              We’ll send a verification code to this email or phone number if it
-              matches an existing LinkedIn account.
-            </p>
-
-            <button
-              type="submit"
-              className={`bg-[var(--color-primary)] w-full cursor-pointer mt-6 py-2 rounded-xl text-white ${
-                loading ? "cursor-not-allowed opacity-50" : ""
-              }`}
-              disabled={loading}
-            >
-              {loading ? "Loading..." : "Sign In"}
-            </button>
-          </form>
-          <p className="text-black mt-5">
-            Go back <Link to="/login">login</Link>
-          </p>
-        </div>
+            {passwordShown ? (
+              <RemoveRedEyeIcon onClick={() => setPasswordShown(false)} />
+            ) : (
+              <VisibilityOffIcon onClick={() => setPasswordShown(true)} />
+            )}
+          </div>
+          <button
+            type="submit"
+            className="bg-[var(--color-primary)] cursor-pointer w-full mt-6 py-2 rounded-xl text-white"
+          >
+            Reset Password
+          </button>
+        </form>
       </div>
     </div>
   );

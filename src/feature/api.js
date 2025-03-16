@@ -15,8 +15,14 @@ export const get = async (url, config) => {
 };
 
 export const post = async (url, data, config) => {
-  const response = await axiosInstance.post(url, data, config || null);
+  const response = await axiosInstance.post(url, data, config || null);  
   return response.data;
+};
+
+
+export const update = async (url, data, config) => {
+  const response = await axiosInstance.put(url, data, config || null);
+  return response;
 };
 
 export const patch = async (url, data, config) => {
