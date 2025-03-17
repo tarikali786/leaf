@@ -4,33 +4,33 @@ import TextField from "@mui/material/TextField";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setEmailValue } from "../../feature/leafSlice";
+import { toast } from "react-toastify";
 import { fetchUserData } from "../../helper/helper";
+import { post } from "../../feature/api";
 
-export const EmailComponent = () => {
+export const EnterEmail = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const [email, setEmail] = useState();
 
-  const [email, setEmail] = useState("");
-
-  
   useEffect(() => {
     const { access_leaf } = fetchUserData();
     if (access_leaf) {
       navigate("/");
     }
   }, []);
-
+  const dispatch = useDispatch();
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(setEmailValue(email));
     navigate("/otp");
   };
+
   return (
     <div className=" flex flex-col items-center py-6">
       <div className=" rounded-xl shadow-2xl sm:w-[440px] w-[320px]">
         <div className=" px-4 py-6 w-full mt-6 form_section">
           <h2 className="text-2xl text-center text-black font-semibold">
-            Forgot password
+            Enter Your Email
           </h2>
 
           <form onSubmit={handleSubmit} className="mt-5">
@@ -43,21 +43,14 @@ export const EmailComponent = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <p className="mt-6">
-              We’ll send a verification code to this email if it matches an
-              existing Helo-leaf account.
-            </p>
 
             <button
               type="submit"
-              className={`bg-[var(--color-primary)] w-full cursor-pointer mt-6 py-2 rounded-xl text-white `}
+              className={`bg-[var(--color-primary)] w-full cursor-pointer mt-6 py-2 rounded-xl text-white`}
             >
-              {"Submit"}
+              {loading ? "Loading..." : "Sign In"}
             </button>
           </form>
-          <p className="text-black mt-5">
-            Go back <Link to="/login">login</Link>
-          </p>
         </div>
       </div>
     </div>

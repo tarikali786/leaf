@@ -4,17 +4,19 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 import Cookies from "js-cookie"; // Import js-cookie
+import { useSelector } from "react-redux";
 
 export const EnterOTP = () => {
   const navigate = useNavigate();
   const [otp, setOtp] = useState("");
-  const email = localStorage.getItem("leafEmail");
-  const leafUserid = localStorage.getItem("leafUserid");
+  const { forgotEmail } = useSelector((state) => state.leaf);
   const hasFetched = useRef(false);
+
+
   const sendOtp = async () => {
     try {
       const res = await axios.post("http://127.0.0.1:5000/send-otp", {
-        email: email,
+        email: forgotEmail,
       });
 
       if (res.status === 200) {
@@ -30,11 +32,13 @@ export const EnterOTP = () => {
     }
   };
 
+
+
   useEffect(() => {
     if (!hasFetched.current) {
       sendOtp();
       hasFetched.current = true;
-    } 
+    }
   }, []);
 
   const handleSubmit = async (e) => {
@@ -49,7 +53,7 @@ export const EnterOTP = () => {
     if (otp === storedOtp) {
       toast.success("OTP Verified Successfully!");
       Cookies.remove("otp"); // Remove OTP after verification
-      navigate(`/forgot-password/${leafUserid}`);
+      navigate(`/forgot-password`);
     } else {
       toast.error("Invalid OTP, try again.");
     }
@@ -70,7 +74,7 @@ export const EnterOTP = () => {
             Enter the 6-digit code
           </h2>
           <p className="text-center my-5">
-            Check {maskEmail(`${email}`)} for a verification code.
+            Check {maskEmail(`${forgotEmail}`)} for a verification code.
           </p>
 
           <form onSubmit={handleSubmit} className="mt-5">

@@ -18,6 +18,7 @@ import {
   Signup,
   Testimonial,
   UpdateAddress,
+  UserOrder,
   WhyUs,
   Wishlist,
 } from "./Page";
@@ -50,6 +51,7 @@ function App() {
           <Route path="review" element={<Review />} />
           <Route path="wishlist" element={<Wishlist />} />
           <Route path="otp" element={<EnterOTP />} />
+          <Route path="order" element={<UserOrder />} />
           <Route path="address/:documentId" element={<UpdateAddress />} />
 
           <Route path="product/:id" element={<ProductDetails />} />
@@ -58,7 +60,7 @@ function App() {
           <Route path="sign-in" element={<SignIn />} />
           <Route path="address" element={<Address />} />
           <Route path="email" element={<EmailComponent />} />
-          <Route path="forgot-password/:id" element={<ForgotPassword />} />
+          <Route path="forgot-password" element={<ForgotPassword />} />
         </Route>
 
         <Route path="*" element={<div>404</div>} />

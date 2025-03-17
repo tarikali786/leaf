@@ -6,4 +6,5 @@ export * from "./why-us";
 export * from "./shop";
 export * from "./wishlist";
 export * from "./cart";
+export * from "./UserOrder";
 export * from "./profile";

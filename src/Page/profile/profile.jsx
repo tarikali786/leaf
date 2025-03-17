@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { Tabs, Tab } from "@mui/material";
+import { Tabs, Tab, useMediaQuery } from "@mui/material";
 import ImageComponent from "../../component/image/ImageComponent";
 import { AccountSetting } from "./account-setting";
 import "./style.css";
 import { Cart } from "./cart";
 import { Order } from "./order";
-import { Payment } from "./payment";
 import { useSelector } from "react-redux";
 import { Address } from "./address";
 export const Profile = () => {
@@ -14,6 +13,7 @@ export const Profile = () => {
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
   };
+  const isMd = useMediaQuery("(max-width:768px)");
 
   return (
     <div className="md:px-[10%] sm:px-[5%] px-4  py-4 mt-2   ">
@@ -26,7 +26,7 @@ export const Profile = () => {
           <b className="font-semibold">{user?.phone}</b>
         </div>
 
-        <div className="md:w-[80%] w-full rounded-xl bg-[#c1c1c1]">
+        <div className="md:w-[80%] w-full md:flex-col flex rounded-xl bg-[#c1c1c1]">
           <Tabs
             value={value}
             onChange={handleTabChange}
@@ -37,6 +37,7 @@ export const Profile = () => {
             }}
             variant="scrollable"
             scrollButtons="auto"
+            orientation={isMd ? "vertical" : "horizontal"}
             aria-label="scrollable auto tabs example"
           >
             <Tab label="Account Settings" />
@@ -44,13 +45,12 @@ export const Profile = () => {
             <Tab label="Address" />
 
             <Tab label="My Orders" />
-            <Tab label="Subscribe for Updates" />
+            {/* <Tab label="Subscribe for Updates" /> */}
           </Tabs>
           {value === 0 && <AccountSetting />}
           {value === 1 && <Cart />}
           {value === 2 && <Address />}
           {value === 3 && <Order />}
-          {value === 4 && <Payment />}
         </div>
       </div>
     </div>

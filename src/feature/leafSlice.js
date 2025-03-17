@@ -14,6 +14,8 @@ const initialState = {
     id: "",
     phone: "",
   },
+
+  forgotEmail: "",
 };
 
 export const createUserData = createAsyncThunk(
@@ -90,6 +92,10 @@ const leafSlice = createSlice({
     setActiveTab: (state, action) => {
       state.activeTab = action.payload;
     },
+
+    setEmailValue: (state, action) => {
+      state.forgotEmail = action.payload;
+    },
   },
 
   extraReducers: (builder) => {
@@ -115,7 +121,6 @@ const leafSlice = createSlice({
 
     builder.addCase(loginUser.fulfilled, (state, action) => {
       state.user.loading = false;
-      localStorage.setItem('leafEmail',action.payload?.user.email)
       storeLeafUser(action.payload);
     });
     builder.addCase(loginUser.rejected, (state, action) => {
@@ -127,7 +132,7 @@ const leafSlice = createSlice({
     });
     builder.addCase(createUserAddress.fulfilled, (state, action) => {
       state.user.loading = false;
-      state.user.address.push(action.payload);
+      state.user.addresses.push(action.payload);
     });
     builder.addCase(createUserAddress.rejected, (state, action) => {
       state.user.loading = false;
@@ -140,7 +145,6 @@ const leafSlice = createSlice({
     });
     builder.addCase(fetchUserDetails.fulfilled, (state, action) => {
       state.loading = false;
-
       (state.user.name = action.payload?.name),
         (state.user.email = action.payload?.email),
         (state.user.phone = action.payload?.phone),
@@ -176,7 +180,7 @@ const leafSlice = createSlice({
     builder.addCase(UpdateUserAddress.fulfilled, (state, action) => {
       state.user.loading = false;
       console.log(action.payload);
-      
+
       const index = state.user.addresses.findIndex(
         (address) => address.documentId === action.payload.data.documentId
       );
@@ -192,6 +196,6 @@ const leafSlice = createSlice({
     });
   },
 });
-export const { setActiveTab } = leafSlice.actions;
+export const { setActiveTab, setEmailValue } = leafSlice.actions;
 
 export default leafSlice.reducer;
