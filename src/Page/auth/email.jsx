@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import "./style.css";
 import TextField from "@mui/material/TextField";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { setEmailValue } from "../../feature/leafSlice";
+import { useDispatch } from "react-redux";
 import { fetchUserData } from "../../helper/helper";
+import { toast } from "react-toastify";
+import Cookies from "js-cookie"; // Import js-cookie
+import axios from "axios";
 
 export const EmailComponent = () => {
   const navigate = useNavigate();
@@ -12,7 +14,6 @@ export const EmailComponent = () => {
 
   const [email, setEmail] = useState("");
 
-  
   useEffect(() => {
     const { access_leaf } = fetchUserData();
     if (access_leaf) {
@@ -20,17 +21,32 @@ export const EmailComponent = () => {
     }
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(setEmailValue(email));
-    navigate("/otp");
+    try {
+      const res = await axios.post("http://127.0.0.1:5000/send-otp", {
+        email: email,
+      });
+
+      if (res.status === 200) {
+        const otpValue = res.data.otp;
+        Cookies.set("otp", otpValue, { expires: 1 / 288 });
+        navigate("/otp");
+
+        toast.success("OTP sent successfully!");
+      } else {
+        toast.error("Failed to send OTP.");
+      }
+    } catch (error) {
+      toast.error("Error sending OTP.");
+    }
   };
   return (
     <div className=" flex flex-col items-center py-6">
       <div className=" rounded-xl shadow-2xl sm:w-[440px] w-[320px]">
         <div className=" px-4 py-6 w-full mt-6 form_section">
           <h2 className="text-2xl text-center text-black font-semibold">
-            Forgot password
+            Enter Your Email
           </h2>
 
           <form onSubmit={handleSubmit} className="mt-5">
@@ -55,8 +71,8 @@ export const EmailComponent = () => {
               {"Submit"}
             </button>
           </form>
-          <p className="text-black mt-5">
-            Go back <Link to="/login">login</Link>
+          <p className=" mt-5 text-blue-500">
+            Go back <Link to="/sign-in">login</Link>
           </p>
         </div>
       </div>

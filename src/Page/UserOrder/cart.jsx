@@ -15,7 +15,7 @@ export const Cart = ({ setOrderValue }) => {
       </div>
       <div className="grid md:grid-cols-3 sm:grid-cols-2  gap-6 ">
         {[1, 2, 3, 4, 5, 6].map((item, index) => (
-          <CartCard key={index} id={index} />
+          <CartCard setOrderValue={setOrderValue} key={index} id={index} />
         ))}
       </div>
     </div>

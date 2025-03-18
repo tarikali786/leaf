@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 export const Address = () => {
   const { addresses } = useSelector((state) => state.leaf.user);
   const dispatch = useDispatch();
-console.log(addresses);
 
   const handleDeleteAddress = (id) => {
     dispatch(deleteAddress(id));

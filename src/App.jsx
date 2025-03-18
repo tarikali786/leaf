@@ -10,6 +10,7 @@ import {
   EnterOTP,
   ForgotPassword,
   Home,
+  OrderDetails,
   ProductDetails,
   Profile,
   Review,
@@ -55,6 +56,7 @@ function App() {
           <Route path="address/:documentId" element={<UpdateAddress />} />
 
           <Route path="product/:id" element={<ProductDetails />} />
+          <Route path="order-details/:id" element={<OrderDetails />} />
           <Route path="contact-us" element={<ContactUs />} />
           <Route path="signup" element={<Signup />} />
           <Route path="sign-in" element={<SignIn />} />

@@ -1,45 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import TextField from "@mui/material/TextField";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import axios from "axios";
 import Cookies from "js-cookie"; // Import js-cookie
-import { useSelector } from "react-redux";
 
 export const EnterOTP = () => {
   const navigate = useNavigate();
   const [otp, setOtp] = useState("");
-  const { forgotEmail } = useSelector((state) => state.leaf);
-  const hasFetched = useRef(false);
-
-
-  const sendOtp = async () => {
-    try {
-      const res = await axios.post("http://127.0.0.1:5000/send-otp", {
-        email: forgotEmail,
-      });
-
-      if (res.status === 200) {
-        const otpValue = res.data.otp;
-        Cookies.set("otp", otpValue, { expires: 1 / 288 });
-        toast.success("OTP sent successfully!");
-      } else {
-        toast.error("Failed to send OTP.");
-      }
-    } catch (error) {
-      toast.error("Error sending OTP.");
-      console.log(error);
-    }
-  };
-
-
-
-  useEffect(() => {
-    if (!hasFetched.current) {
-      sendOtp();
-      hasFetched.current = true;
-    }
-  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -59,13 +26,6 @@ export const EnterOTP = () => {
     }
   };
 
-  function maskEmail(email) {
-    return email.replace(
-      /^(.)(.*)(@.*)$/,
-      (_, first, middle, domain) => first + "****" + domain
-    );
-  }
-
   return (
     <div className="flex flex-col items-center py-6">
       <div className="rounded-xl shadow-2xl sm:w-[440px] w-[320px]">
@@ -73,9 +33,6 @@ export const EnterOTP = () => {
           <h2 className="text-2xl text-center text-black font-semibold">
             Enter the 6-digit code
           </h2>
-          <p className="text-center my-5">
-            Check {maskEmail(`${forgotEmail}`)} for a verification code.
-          </p>
 
           <form onSubmit={handleSubmit} className="mt-5">
             <TextField
@@ -95,12 +52,6 @@ export const EnterOTP = () => {
             </button>
           </form>
 
-          <p className="text-black mt-5">
-            Didn't receive the code?{" "}
-            <button onClick={sendOtp} className="text-blue-500">
-              Resend OTP
-            </button>
-          </p>
         </div>
       </div>
     </div>

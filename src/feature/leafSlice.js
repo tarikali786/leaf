@@ -13,9 +13,13 @@ const initialState = {
     email: "",
     id: "",
     phone: "",
+    alternatePhone: "",
   },
 
-  forgotEmail: "",
+  cart:[],
+  order:[],
+  wishList:[],
+  
 };
 
 export const createUserData = createAsyncThunk(
@@ -65,6 +69,19 @@ export const fetchUserDetails = createAsyncThunk("user/details", async (id) => {
   }
 });
 
+export const UpdateUserDetails = createAsyncThunk(
+  "user/Updatedetails",
+  async ({ id, data }) => {
+    try {
+      const response = await update(`/user-accounts/${id}`, { data });
+
+      return response.data.data;
+    } catch (error) {
+      return error;
+    }
+  }
+);
+
 export const deleteAddress = createAsyncThunk(
   "user/deleteAddress",
   async (id) => {
@@ -91,11 +108,7 @@ const leafSlice = createSlice({
   reducers: {
     setActiveTab: (state, action) => {
       state.activeTab = action.payload;
-    },
-
-    setEmailValue: (state, action) => {
-      state.forgotEmail = action.payload;
-    },
+    }  
   },
 
   extraReducers: (builder) => {
@@ -148,11 +161,29 @@ const leafSlice = createSlice({
       (state.user.name = action.payload?.name),
         (state.user.email = action.payload?.email),
         (state.user.phone = action.payload?.phone),
+        (state.user.alternatePhone = action.payload?.alternatePhone),
         (state.user.id = action.payload?.documentId),
         (state.user.addresses = action.payload.addresses);
     });
 
     builder.addCase(fetchUserDetails.rejected, (state, action) => {
+      state.loading = false;
+    });
+
+    //update user  details
+
+    builder.addCase(UpdateUserDetails.pending, (state, action) => {
+      state.user.loading = true;
+    });
+    builder.addCase(UpdateUserDetails.fulfilled, (state, action) => {
+      state.loading = false;
+      (state.user.name = action.payload?.name),
+        (state.user.email = action.payload?.email),
+        (state.user.phone = action.payload?.phone),
+        (state.user.alternatePhone = action.payload?.alternatePhone);
+    });
+
+    builder.addCase(UpdateUserDetails.rejected, (state, action) => {
       state.loading = false;
     });
 

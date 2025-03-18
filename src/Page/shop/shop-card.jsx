@@ -1,25 +1,33 @@
 import { useEffect, useState } from "react";
 import ImageComponent from "../../component/image/ImageComponent";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 export const ShopCard = ({ id }) => {
   const [isFavorite, setIsFavorite] = useState([]);
-  const handleAddFavorite = (id) => {
+  const naviagte = useNavigate();
+  const handleAddFavorite = (e, id) => {
+    e.stopPropagation();
+
     if (isFavorite.includes(id)) {
       setIsFavorite(isFavorite.filter((item) => item !== id));
     } else {
       setIsFavorite(isFavorite.concat(id));
     }
   };
-
+  const showProductDetails = ({ id }) => {
+    naviagte(`/product/${id}`);
+  };
   return (
-    <Link to={`/product/${id}`} className="p-3 shadow-2xl relative rounded-xl">
+    <div
+      onClick={() => showProductDetails(id)}
+      className="p-3 cursor-pointer shadow-2xl relative rounded-xl"
+    >
       <ImageComponent cardCss="w-full h-[40vh]" />
       <div className=" absolute top-4 right-4">
         <FavoriteIcon
           className=" cursor-pointer"
-          onClick={() => handleAddFavorite(id)}
+          onClick={(e) => handleAddFavorite(e, id)}
           style={{
             width: "30px",
             height: "30px",
@@ -34,6 +42,6 @@ export const ShopCard = ({ id }) => {
           Add To Cart <ShoppingCartCheckoutIcon className="ml-6" />
         </button>
       </div>
-    </Link>
+    </div>
   );
 };
