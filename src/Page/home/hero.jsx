@@ -1,6 +1,6 @@
 import ImageComponent from "../../component/image/ImageComponent";
-import Banner from "../../assets/banner.png";
 import { Search } from "./search";
+import Banner from "../../assets/product 1/5.png";
 
 export const Hero = () => {
   return (

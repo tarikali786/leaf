@@ -5,6 +5,10 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
+import Img1 from "../../../src/assets/product 1/1.png";
+
+import { CategoryData } from "../../data/staticData";
+import ImageComponent from "../../component/image/ImageComponent";
 export const Categories = () => {
   const isSm = useMediaQuery("(max-width:760px)"); // Mobile
   const isMd = useMediaQuery("(max-width:1060px)"); // Tablet
@@ -33,7 +37,6 @@ export const Categories = () => {
             }}
             pagination={{
               dynamicBullets: true,
-              
             }}
             modules={[EffectCoverflow, Pagination, Autoplay]}
             autoplay={{
@@ -42,9 +45,13 @@ export const Categories = () => {
             }}
             className=""
           >
-            {[1, 2, 3, 4, 5, 6]?.map((item, index) => (
+            {CategoryData?.map((item, index) => (
               <SwiperSlide key={index} className="">
-                <div className="w-full  min-h-[60vh]  m-auto  rounded-xl overflow-hidden  flex flex-col justify-center items-center py-10 bg-gray-200"></div>
+                <ImageComponent
+                  src={item?.img}
+                  alt="imt"
+                  cardCss="h-[60vh]  rounded-xl overflow-hidden bg-gray-300  "
+                />
                 <div className="text-center mt-4">
                   <h3 className="text-[15px] font-semibold">Category 1</h3>
                   <p className="text-gray-800 mt-0 text-sm">

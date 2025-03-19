@@ -1,6 +1,8 @@
 import React from "react";
 import Whyus from "../../assets/Group 49.png";
 import Beleive from "../../assets/Group 50.png";
+import Img4 from "../../assets/product 1/4.png";
+
 import ImageComponent from "../../component/image/ImageComponent";
 
 export const WhyUs = () => {
@@ -9,48 +11,70 @@ export const WhyUs = () => {
       <h2 className="text-2xl font-semibold">ABOUT US</h2>
 
       <div className="flex sm:flex-row gap-4 flex-col mt-16 ">
-        <div className="w-[70%] space-y-5">
-          <div className="flex gap-4">
-            <ImageComponent
-              src={Whyus}
-              cardCss="sm:size-36 size:26"
-              imgCss=""
-            />
-            <p className="w-[70%]">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Error,
-              modi labore! Incidunt labore laborum eius. Dignissimos hic
-              perspiciatis dicta tenetur error! Ut quo at similique, commodi
-              nesciunt incidunt cumque voluptatum ipsam vel autem, dolores porro
-              voluptates sed tempore quae maxime quod debitis reprehenderit in
-              ea explicabo. Tempora dolores molestiae unde illum excepturi, illo
-              vero sit harum nemo pariatur deserunt rerum?
+        <div className="w-[60%] space-y-5">
+          <p className="text-lg">
+            Halo Leaf is dedicated to providing eco-friendly, sustainable, and
+            biodegradable dining solutions through our high-quality Siali leaf
+            plates. Our products honor traditional craftsmanship while promoting
+            a greener planet. Every plate is made with care, ensuring a natural,
+            safe, and sustainable dining experience.
+          </p>
+
+          <p className="text-lg">
+            Our mission at Halo Leaf is to reduce plastic waste and promote
+            sustainable dining by offering 100% natural Siali leaf plates. We
+            aim to:
+            <ul className="px-4 list-disc mt-6 text-gray-700">
+              <li>
+                Encourage eco-conscious living by providing biodegradable and
+                chemical-free tableware.
+              </li>
+              <li>
+                Support rural communities by empowering tribal artisans who
+                handcraft these plates.
+              </li>
+              <li>
+                Preserve nature by promoting zero-waste solutions that leave no
+                environmental footprint.
+              </li>
+            </ul>
+          </p>
+
+          <div>
+            <h3 className="text-xl  font-semibold">
+              Why Choose Halo Leaf’s Siali Leaf Plates?
+            </h3>
+
+            <p className="text-lg">
+              Benefits of Siali Leaf
+              <ul className="px-4 list-disc mt-6 text-gray-700">
+                <li>100% Natural & Biodegradable</li>
+                <li>SuEco-Friendly & Renewable</li>
+                <li>Supports Rural Livelihoods</li>
+              </ul>
             </p>
+
+            <div className="text-lg my-6 text-semibold">
+              <h3 className=" text-lg  font-semibold">
+                {" "}
+                Health Benefits of Eating on Siali Leaf Plates
+              </h3>
+              <ul className="px-4 list-disc mt-6 text-gray-700">
+                <li>Chemical-Free & Non-Toxic</li>
+                <li>Naturally Antibacterial</li>
+                <li>Enhances Taste & Aroma</li>
+              </ul>
+            </div>
           </div>
-          <div className="flex gap-4 flex-row-reverse">
-            <ImageComponent
-              src={Beleive}
-              cardCss="sm:size-36 size:26"
-              imgCss=""
-            />
-            <p className="w-[70%]">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Error,
-              modi labore! Incidunt labore laborum eius. Dignissimos hic
-              perspiciatis dicta tenetur error! Ut quo at similique, commodi
-              nesciunt incidunt cumque voluptatum ipsam vel autem, dolores porro
-              voluptates sed tempore quae maxime quod debitis reprehenderit in
-              ea explicabo. Tempora dolores molestiae unde illum excepturi, illo
-              vero sit harum nemo pariatur deserunt rerum?
-            </p>
-          </div>
+          <p className="">
+            At Halo Leaf, we believe in sustainability with impact. Every meal
+            served on our plates is a step toward a cleaner planet and a
+            healthier lifestyle. Join us in embracing nature’s best dining
+            solution!
+          </p>
         </div>
-        <div className="w-[30%] h-[50vh]">
-          <img
-            src={
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUtDF7VgU4terjjq8xZW_pyOYIJ7Dw5fOm9w&s"
-            }
-            alt=""
-            className="w-full h-full object-fill"
-          />
+        <div className="w-[40%] h-full">
+          <img src={Img4} alt="" className="w-full h-full object-cover" />
         </div>
       </div>
     </div>
