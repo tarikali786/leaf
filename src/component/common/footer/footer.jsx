@@ -2,10 +2,10 @@ import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import XIcon from "@mui/icons-material/X";
 import ImageComponent from "../../image/ImageComponent";
-import Logo from "../../../assets/Logo3.png";
+import Logo from "../../../assets/whiteLogo.png";
 export const Footer = () => {
   return (
-    <div className="md:px-[8%] sm:px-[5%] px-2 py-6 text-center md:text-left bg-[var(--color-secondry)]  flex justify-between  gap-4 flex-wrap pt-10">
+    <div className="md:px-[8%] sm:px-[5%] px-2 py-6 text-center md:text-left bg-[var(--color-secondry)]  flex justify-center md:justify-between  gap-4 flex-wrap pt-10">
       <div className="flex  flex-col items-center ">
         <ImageComponent
           src={Logo}
