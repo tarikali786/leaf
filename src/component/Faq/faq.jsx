@@ -5,32 +5,29 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useMediaQuery } from "@mui/material";
 
-export const FAQ = () => {
-  const isMd = useMediaQuery("(min-width:568px) and (max-width:1023px)"); // Medium screens (md)
+export const FAQ = ({ question, answer }) => {
+  const isMd = useMediaQuery("(min-width:568px) and (max-width:1023px)");
 
   return (
-    <div>
-      <Accordion className="my-4 py-1">
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1-content"
-          id="panel1-header"
+    <Accordion className="my-4 py-1">
+      <AccordionSummary
+        expandIcon={<ExpandMoreIcon />}
+        aria-controls="panel-content"
+        id="panel-header"
+      >
+        <Typography
+          component="span"
+          sx={{
+            fontSize: isMd ? "20px" : "18px",
+            fontWeight: isMd ? "600" : "500",
+          }}
         >
-          <Typography
-            component="span"
-            sx={{
-              fontSize: isMd ? "20px" : "18px",
-              fontWeight: isMd ? "600" : "500",
-            }}
-          >
-            Accordion 1
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails sx={{ fontSize: "16px" }}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-          malesuada lacus ex, sit amet blandit leo lobortis eget.
-        </AccordionDetails>
-      </Accordion>
-    </div>
+          {question}
+        </Typography>
+      </AccordionSummary>
+      <AccordionDetails sx={{ fontSize: "16px" }}>
+        {answer}
+      </AccordionDetails>
+    </Accordion>
   );
 };
