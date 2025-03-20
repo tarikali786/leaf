@@ -18,12 +18,12 @@ export const Address = () => {
 
   const { loading } = useSelector((state) => state.leaf.user);
   const [userAddress, setUserAddress] = useState({
-    address1: "123 Main St",
-    address2: "Suite 1",
-    city: "Sample City",
+    address1: "",
+    address2: "",
+    city: "",
     state: "",
-    district: "Sample District",
-    pin_code: "343455",
+    district: "",
+    pin_code: "",
     user_account: id ?? uid,
   });
 

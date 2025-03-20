@@ -17,7 +17,8 @@ export const Header = () => {
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const activeTab = useSelector((state) => state.leaf.activeTab);
+  const { activeTab, cart } = useSelector((state) => state.leaf);
+
   const handleSetActiveTab = (tab) => {
     dispatch(setActiveTab(tab));
   };
@@ -62,8 +63,11 @@ export const Header = () => {
         ))}
       </div>
       <div className="flex items-center md:gap-6 sm:gap-4 gap-4">
-        <Link to="/cart">
+        <Link to="/cart" className="relative">
           <ShoppingCartOutlinedIcon />
+          <span className="absolute -top-2 -right-1 bg-red-500 text-white font-semibold rounded-full text-sm px-1">
+            {cart?.length ?? 0}
+          </span>
         </Link>
 
         {access_leaf ? (

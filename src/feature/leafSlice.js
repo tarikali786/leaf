@@ -16,10 +16,10 @@ const initialState = {
     alternatePhone: "",
   },
 
-  cart:[],
-  order:[],
-  wishList:[],
-  
+  cart: [],
+  order: [],
+  wishList: [],
+  product:[]
 };
 
 export const createUserData = createAsyncThunk(
@@ -102,13 +102,22 @@ export const UpdateUserAddress = createAsyncThunk(
   }
 );
 
+export const fetchProductList = createAsyncThunk("shop/product", async () => {
+  try {
+    const response = await get(`/products?populate=*`);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+});
+
 const leafSlice = createSlice({
   name: "leaf",
   initialState,
   reducers: {
     setActiveTab: (state, action) => {
       state.activeTab = action.payload;
-    }  
+    },
   },
 
   extraReducers: (builder) => {
@@ -139,6 +148,7 @@ const leafSlice = createSlice({
     builder.addCase(loginUser.rejected, (state, action) => {
       state.user.loading = false;
     });
+
     //addresses
     builder.addCase(createUserAddress.pending, (state, action) => {
       state.user.loading = true;
@@ -182,7 +192,6 @@ const leafSlice = createSlice({
         (state.user.phone = action.payload?.phone),
         (state.user.alternatePhone = action.payload?.alternatePhone);
     });
-
     builder.addCase(UpdateUserDetails.rejected, (state, action) => {
       state.loading = false;
     });
@@ -192,7 +201,6 @@ const leafSlice = createSlice({
     builder.addCase(deleteAddress.pending, (state, action) => {
       state.user.loading = true;
     });
-
     builder.addCase(deleteAddress.fulfilled, (state, action) => {
       state.user.loading = false;
       state.user.addresses = state.user.addresses.filter(
@@ -207,7 +215,6 @@ const leafSlice = createSlice({
     builder.addCase(UpdateUserAddress.pending, (state, action) => {
       state.user.loading = true;
     });
-
     builder.addCase(UpdateUserAddress.fulfilled, (state, action) => {
       state.user.loading = false;
       console.log(action.payload);
@@ -224,6 +231,18 @@ const leafSlice = createSlice({
     });
     builder.addCase(UpdateUserAddress.rejected, (state, action) => {
       state.user.loading = false;
+    });
+
+    // Fetch Product List
+    builder.addCase(fetchProductList.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(fetchProductList.fulfilled, (state, action) => {
+      state.loading = false;
+      state.product = action.payload;
+    });
+    builder.addCase(fetchProductList.rejected, (state, action) => {
+      state.loading = false;
     });
   },
 });

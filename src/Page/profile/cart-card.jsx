@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 export const CartCard = ({ id }) => {
   return (
     <Link to={`/product/${id}`} className="p-3 shadow-2xl  rounded-xl">
-      <ImageComponent cardCss="w-full h-[26vh]" />
+      <ImageComponent cardCss="w-full xl:h-[26vh] md:h-[15vh] h-[10vh]" />
 
       <div className="px-2 pt-2">
         <h3 className="text-center text-xl">GS-4322</h3>
