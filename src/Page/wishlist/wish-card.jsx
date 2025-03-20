@@ -19,7 +19,7 @@ export const WishCard = ({ id }) => {
 
   return (
     <Link to={`/product/${id}`} className="p-3 shadow-2xl relative rounded-xl">
-      <ImageComponent cardCss="w-full h-[40vh]" />
+      <ImageComponent cardCss="w-full xl:h-[26vh] md:h-[20vh] h-[10vh] " />
       <div className="absolute top-4 right-4">
         <FavoriteIcon
           className="cursor-pointer"

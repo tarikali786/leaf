@@ -19,7 +19,9 @@ const initialState = {
   cart: [],
   order: [],
   wishList: [],
-  product:[]
+  product: [],
+
+  OrderItem: [{ item: [], totalPrice: 0, address: {}, paymentInfo: {} }],
 };
 
 export const createUserData = createAsyncThunk(
