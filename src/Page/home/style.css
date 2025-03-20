@@ -11,3 +11,13 @@
   /* bottom: -1rem !important; */
   display: none;
 }
+
+.category-card {
+  background-image: url("/src/assets/product 1/bg.jpeg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

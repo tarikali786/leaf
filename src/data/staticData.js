@@ -15,18 +15,18 @@ import Img7 from "../assets/product 1/7.png";
 import Img8 from "../assets/product 1/8.png";
 import Img9 from "../assets/product 1/9.png";
 export const CategoryData = [
-  {
-    img: Img1,
-  },
-  {
-    img: Img2,
-  },
-  {
-    img: Img3,
-  },
-  {
-    img: Img4,
-  },
+  // {
+  //   img: Img1,
+  // },
+  // {
+  //   img: Img2,
+  // },
+  // {
+  //   img: Img3,
+  // },
+  // {
+  //   img: Img4,
+  // },
   {
     img: Img5,
   },

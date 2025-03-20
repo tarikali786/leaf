@@ -1,7 +1,7 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectCoverflow, Pagination, Autoplay } from "swiper/modules";
 import useMediaQuery from "@mui/material/useMediaQuery";
-
+import "./style.css";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
@@ -50,7 +50,7 @@ export const Categories = () => {
                 <ImageComponent
                   src={item?.img}
                   alt="imt"
-                  cardCss="h-[60vh]  rounded-xl overflow-hidden bg-gray-300  "
+                  cardCss="h-[60vh]  rounded-xl overflow-hidden category-card "
                 />
                 <div className="text-center mt-4">
                   <h3 className="text-[15px] font-semibold">Category 1</h3>

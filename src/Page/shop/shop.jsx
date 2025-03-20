@@ -9,7 +9,7 @@ export const Shop = () => {
       <h2 className="text-2xl font-semibold">Shop</h2>
       {product.length == 0 ? (
         <div className="flex justify-center items-center h-[50vh]">
-          <h1 className="text-2xl">No items in the cart</h1>
+          <h1 className="text-2xl">No items in the Product</h1>
         </div>
       ) : (
         <div className="grid md:grid-cols-3 sm:grid-cols-2  gap-6 mt-6">
