@@ -172,7 +172,8 @@ export const WhyUs = () => {
       </div>
 
       <p className="text-lg leading-relaxed mt-8 text-center max-w-3xl m-auto py-10">
-        At Halo Leaf, we believe in sustainability with impact...
+        Our mission at Halo Leaf is to reduce plastic waste and promote
+        sustainable dining by offering 100% natural Siali leaf plates.
       </p>
     </div>
   );
