@@ -1,180 +1,179 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { 
-  FaLeaf, 
-  FaRecycle, 
-  FaSeedling, 
-  FaGlobe, 
-  FaHandsHelping, 
-  FaMedkit, 
-  FaBiohazard, 
-  FaUtensils 
+import { useEffect, useRef } from "react";
+import { create } from "@lottiefiles/lottie-interactivity";
+import { motion, useAnimation } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import {
+  FaSeedling,
+  FaGlobe,
+  FaHandsHelping,
+  FaMedkit,
+  FaBiohazard,
 } from "react-icons/fa";
+import lottie from "lottie-web";
+import LineAnimation from "../../assets/Lotie/Leaf.json";
 
 export const WhyUs = () => {
-  // Variants for tile animations on mount and hover
+  const lottieContainer = useRef(null);
+  const controls = useAnimation();
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.3 });
+
   const tileVariants = {
-    initial: { opacity: 0, y: 20 },
-    animate: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-    hover: { scale: 1.05, transition: { duration: 0.3 } }
+    hidden: { opacity: 0, y: 40 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, delay: 0.2 },
+    },
+    hover: { scale: 1.05, transition: { duration: 0.3 } },
   };
 
+  useEffect(() => {
+    if (inView) {
+      const timer = setTimeout(() => {
+        controls.start("visible");
+      }, 1000); // Delay 2 seconds after inView
+      return () => clearTimeout(timer);
+    }
+  }, [inView, controls]);
+
+  useEffect(() => {
+    if (lottieContainer.current) {
+      const lottieInstance = lottie.loadAnimation({
+        container: lottieContainer.current,
+        renderer: "svg",
+        loop: false,
+        autoplay: false,
+        animationData: LineAnimation,
+      });
+
+      create({
+        mode: "scroll",
+        player: lottieInstance,
+        actions: [
+          {
+            visibility: [0, 1],
+            type: "seek",
+            frames: [0, 180],
+          },
+        ],
+      });
+
+      lottieInstance.addEventListener("complete", () => {
+        lottieInstance.pause();
+      });
+
+      return () => {
+        lottieInstance.destroy();
+      };
+    }
+  }, []);
+
   return (
-    <div className="md:px-[10%] sm:px-[5%] px-4 py-8 mt-4">
-      <h2 className="text-3xl font-bold text-center mb-8">ABOUT US</h2>
-      <div className="space-y-8 text-center">
-        {/* Main Content Section */}
-        <div className="space-y-6">
-          <p className="text-lg leading-relaxed">
-            Halo Leaf is dedicated to providing eco-friendly, sustainable, and biodegradable dining solutions through our high-quality Siali leaf plates. Our products honor traditional craftsmanship while promoting a greener planet. Every plate is made with care, ensuring a natural, safe, and sustainable dining experience.
-          </p>
+    <div className="w-full overflow-hidden" ref={ref}>
+      <h2 className="text-3xl font-bold text-center my-12">ABOUT US</h2>
 
-          {/* Mission Tiles */}
-          <div>
-            <p className="text-lg leading-relaxed">
-              Our mission at Halo Leaf is to reduce plastic waste and promote sustainable dining by offering 100% natural Siali leaf plates. We aim to:
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
-              <motion.div 
-                variants={tileVariants}
-                initial="initial"
-                animate="animate"
-                whileHover="hover"
-                className="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg"
-              >
-                <FaLeaf className="text-green-500 text-5xl" />
-                <h4 className="mt-4 text-xl font-semibold">Eco-Conscious Living</h4>
-                <p className="mt-2 text-gray-600 text-sm">
-                  Biodegradable & chemical-free tableware.
-                </p>
-              </motion.div>
-              <motion.div 
-                variants={tileVariants}
-                initial="initial"
-                animate="animate"
-                whileHover="hover"
-                className="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg"
-              >
-                <FaHandsHelping className="text-green-500 text-5xl" />
-                <h4 className="mt-4 text-xl font-semibold">Community Support</h4>
-                <p className="mt-2 text-gray-600 text-sm">
-                  Empowering tribal artisans and rural communities.
-                </p>
-              </motion.div>
-              <motion.div 
-                variants={tileVariants}
-                initial="initial"
-                animate="animate"
-                whileHover="hover"
-                className="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg"
-              >
-                <FaRecycle className="text-green-500 text-5xl" />
-                <h4 className="mt-4 text-xl font-semibold">Zero Waste</h4>
-                <p className="mt-2 text-gray-600 text-sm">
-                  Solutions that leave no environmental footprint.
-                </p>
-              </motion.div>
-            </div>
-          </div>
-
-          {/* Benefits Tiles */}
-          <div>
-            <h3 className="text-2xl font-bold mt-8 mb-4">Why Choose Halo Leaf’s Siali Leaf Plates?</h3>
-            <p className="text-lg leading-relaxed mb-4">Benefits of Siali Leaf</p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <motion.div 
-                variants={tileVariants}
-                initial="initial"
-                animate="animate"
-                whileHover="hover"
-                className="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg"
-              >
-                <FaSeedling className="text-green-500 text-5xl" />
-                <h4 className="mt-4 text-xl font-semibold">Natural & Biodegradable</h4>
-                <p className="mt-2 text-gray-600 text-sm">
-                  100% natural and fully biodegradable.
-                </p>
-              </motion.div>
-              <motion.div 
-                variants={tileVariants}
-                initial="initial"
-                animate="animate"
-                whileHover="hover"
-                className="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg"
-              >
-                <FaGlobe className="text-green-500 text-5xl" />
-                <h4 className="mt-4 text-xl font-semibold">Eco-Friendly</h4>
-                <p className="mt-2 text-gray-600 text-sm">
-                  Renewable and sustainable for a greener future.
-                </p>
-              </motion.div>
-              <motion.div 
-                variants={tileVariants}
-                initial="initial"
-                animate="animate"
-                whileHover="hover"
-                className="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg"
-              >
-                <FaHandsHelping className="text-green-500 text-5xl" />
-                <h4 className="mt-4 text-xl font-semibold">Rural Livelihoods</h4>
-                <p className="mt-2 text-gray-600 text-sm">
-                  Supporting communities and tribal artisans.
-                </p>
-              </motion.div>
-            </div>
-
-            {/* Health Benefits Tiles */}
-            <div>
-              <h3 className="text-2xl font-bold mt-8 mb-4">Health Benefits</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <motion.div 
-                  variants={tileVariants}
-                  initial="initial"
-                  animate="animate"
-                  whileHover="hover"
-                  className="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg"
-                >
-                  <FaMedkit className="text-green-500 text-5xl" />
-                  <h4 className="mt-4 text-xl font-semibold">Chemical-Free</h4>
-                  <p className="mt-2 text-gray-600 text-sm">
-                    Non-toxic for a healthier meal.
-                  </p>
-                </motion.div>
-                <motion.div 
-                  variants={tileVariants}
-                  initial="initial"
-                  animate="animate"
-                  whileHover="hover"
-                  className="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg"
-                >
-                  <FaBiohazard className="text-green-500 text-5xl" />
-                  <h4 className="mt-4 text-xl font-semibold">Antibacterial</h4>
-                  <p className="mt-2 text-gray-600 text-sm">
-                    Naturally prevents bacteria growth.
-                  </p>
-                </motion.div>
-                <motion.div 
-                  variants={tileVariants}
-                  initial="initial"
-                  animate="animate"
-                  whileHover="hover"
-                  className="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg"
-                >
-                  <FaUtensils className="text-green-500 text-5xl" />
-                  <h4 className="mt-4 text-xl font-semibold">Enhanced Dining</h4>
-                  <p className="mt-2 text-gray-600 text-sm">
-                    Elevates taste and aroma.
-                  </p>
-                </motion.div>
-              </div>
-            </div>
-          </div>
-
-          <p className="text-lg leading-relaxed mt-8">
-            At Halo Leaf, we believe in sustainability with impact. Every meal served on our plates is a step toward a cleaner planet and a healthier lifestyle. Join us in embracing nature’s best dining solution!
-          </p>
-        </div>
+      <div className="flex justify-center my-6">
+        <p className="text-lg leading-relaxed max-w-3xl text-center">
+          Halo Leaf is dedicated to providing eco-friendly, sustainable, and
+          biodegradable dining solutions through our high-quality Siali leaf
+          plates...
+        </p>
       </div>
+
+      <div className="relative discover-left-card mb-[30vh]">
+        <div className="lottieContainer-caard" ref={lottieContainer}></div>
+
+        {/* Cards */}
+        <motion.div
+          variants={tileVariants}
+          initial="hidden"
+          animate={controls}
+          whileHover="hover"
+          className="absolute top-68 left-28 flex flex-col items-center p-6 rounded-lg shadow-lg bg-white"
+        >
+          <FaMedkit className="text-green-500 text-5xl" />
+          <h4 className="mt-4 text-xl font-semibold">Chemical-Free</h4>
+          <p className="mt-2 text-gray-600 text-sm">
+            Non-toxic for a healthier meal.
+          </p>
+        </motion.div>
+
+        <motion.div
+          variants={tileVariants}
+          initial="hidden"
+          animate={controls}
+          whileHover="hover"
+          className="absolute bottom-30 left-8 flex flex-col items-center p-6 rounded-lg shadow-lg bg-white"
+        >
+          <FaHandsHelping className="text-green-500 text-5xl" />
+          <h4 className="mt-4 text-xl font-semibold">Community Support</h4>
+          <p className="mt-2 text-gray-600 text-sm">
+            Empowering tribal artisans and rural communities.
+          </p>
+        </motion.div>
+
+        <motion.div
+          variants={tileVariants}
+          initial="hidden"
+          animate={controls}
+          whileHover="hover"
+          className="absolute -bottom-26 left-50 flex flex-col items-center p-6 bg-white rounded-lg shadow-lg"
+        >
+          <FaSeedling className="text-green-500 text-5xl" />
+          <h4 className="mt-4 text-xl font-semibold">
+            Natural & Biodegradable
+          </h4>
+          <p className="mt-2 text-gray-600 text-sm">
+            100% natural and fully biodegradable.
+          </p>
+        </motion.div>
+
+        <motion.div
+          variants={tileVariants}
+          initial="hidden"
+          animate={controls}
+          whileHover="hover"
+          className="absolute top-40 right-6 flex flex-col items-center p-6 rounded-lg shadow-lg bg-white"
+        >
+          <FaGlobe className="text-green-500 text-5xl" />
+          <h4 className="mt-4 text-xl font-semibold">Eco-Friendly</h4>
+          <p className="mt-2 text-gray-600 text-sm">
+            Renewable and sustainable for a greener future.
+          </p>
+        </motion.div>
+
+        <motion.div
+          variants={tileVariants}
+          initial="hidden"
+          animate={controls}
+          whileHover="hover"
+          className="absolute bottom-50 right-6 flex flex-col items-center p-6 rounded-lg shadow-lg bg-white"
+        >
+          <FaHandsHelping className="text-green-500 text-5xl" />
+          <h4 className="mt-4 text-xl font-semibold">Rural Livelihoods</h4>
+          <p className="mt-2 text-gray-600 text-sm">
+            Supporting communities and tribal artisans.
+          </p>
+        </motion.div>
+
+        <motion.div
+          variants={tileVariants}
+          initial="hidden"
+          animate={controls}
+          whileHover="hover"
+          className="absolute -bottom-26 right-60 p-6 flex flex-col items-center rounded-lg shadow-lg bg-white"
+        >
+          <FaBiohazard className="text-green-500 text-5xl" />
+          <h4 className="mt-4 text-xl font-semibold">Antibacterial</h4>
+          <p className="mt-2 text-gray-600 text-sm">
+            Naturally prevents bacteria growth.
+          </p>
+        </motion.div>
+      </div>
+
+      <p className="text-lg leading-relaxed mt-8 text-center max-w-3xl m-auto py-10">
+        At Halo Leaf, we believe in sustainability with impact...
+      </p>
     </div>
   );
 };
