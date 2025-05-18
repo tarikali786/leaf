@@ -120,6 +120,36 @@ const leafSlice = createSlice({
     setActiveTab: (state, action) => {
       state.activeTab = action.payload;
     },
+
+    addToCart: (state, action) => {
+      const item = action.payload;
+      const existItem = state.cart.find((i) => i.id === item.id);
+      if (existItem) {
+        existItem.quantity += item.quantity || 1;
+      } else {
+        state.cart.push({ ...item, quantity: item.quantity || 1 });
+      }
+    },
+
+    // Remove item from cart
+    removeFromCart: (state, action) => {
+      const id = action.payload;
+      state.cart = state.cart.filter((item) => item.id !== id);
+    },
+
+    // Update item quantity
+    updateCartItemQuantity: (state, action) => {
+      const { id, quantity } = action.payload;
+      const item = state.cart.find((item) => item.id === id);
+      if (item) {
+        item.quantity = quantity;
+      }
+    },
+
+    // Clear cart
+    clearCart: (state) => {
+      state.cart = [];
+    },
   },
 
   extraReducers: (builder) => {
@@ -248,6 +278,12 @@ const leafSlice = createSlice({
     });
   },
 });
-export const { setActiveTab, setEmailValue } = leafSlice.actions;
+export const {
+  setActiveTab,
+  addToCart,
+  removeFromCart,
+  updateCartItemQuantity,
+  clearCart,
+} = leafSlice.actions;
 
 export default leafSlice.reducer;

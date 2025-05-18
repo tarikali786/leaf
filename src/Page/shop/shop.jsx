@@ -14,7 +14,7 @@ export const Shop = () => {
       ) : (
         <div className="grid md:grid-cols-3 sm:grid-cols-2  gap-6 mt-6">
           {product?.map((item, index) => (
-            <ShopCard key={index} id={index} />
+            <ShopCard key={index} id={index} item={item} />
           ))}
         </div>
       )}

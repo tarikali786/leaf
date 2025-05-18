@@ -18,8 +18,11 @@ h3 {
 p {
   font-family: "Poppins", sans-serif;
   font-weight: 400;
+  color:#121036 ;
+
 }
 @theme {
   --color-primary: #5ab334a3;
   --color-secondry: #5ab33480;
+  
 }
