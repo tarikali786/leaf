@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -9,8 +9,15 @@ import ImageComponent from "../../component/image/ImageComponent";
 import { useMediaQuery } from "@mui/material";
 import { ShopCard } from "./shop-card";
 import { Link, useParams } from "react-router-dom";
+import axios from "axios";
 export const ProductDetails = () => {
   const { id } = useParams();
+
+  const [deliveryPincode, setDeliveryPincode] = useState("");
+  const [serviceResponse, setServiceResponse] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
   const isLg = useMediaQuery("(min-width:968px)"); // Large screens (lg)
   const isMd = useMediaQuery("(min-width:568px) and (max-width:1023px)"); // Medium screens (md)
   const isSm = useMediaQuery("(max-width:445px)");
@@ -23,6 +30,56 @@ export const ProductDetails = () => {
   useEffect(() => {
     window.scrollTo(-0, -0);
   }, [id]);
+
+  const checkServiceability = async () => {
+    if (!deliveryPincode) return;
+
+    setLoading(true);
+    setError("");
+    setServiceResponse(null);
+
+    try {
+      const response = await fetch(
+        "https://api.rapidshyp.com/rapidshyp/apis/v1/serviceabilty_check",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "rapidshyp-token":
+              "8e3ca34d7ad8ac6598c3110cd8e3be08b8efe0b4ed0f28e71b3706e1f5dabcaf",
+          },
+          body: JSON.stringify({
+            Pickup_pincode: "226202",
+            Delivery_pincode: deliveryPincode,
+            cod: true,
+            total_order_value: 2000,
+            weight: 1,
+          }),
+        }
+      );
+
+      setServiceResponse(response.data);
+    } catch (err) {
+      console.error(err);
+      setError(
+        "Service check failed. Please check your pincode and try again."
+      );
+      if (err.response) {
+        // The request was made and the server responded with a status code
+        console.error("Response data:", err.response.data);
+        console.error("Response status:", err.response.status);
+        console.error("Response headers:", err.response.headers);
+      } else if (err.request) {
+        // The request was made but no response was received
+        console.error("No response received:", err.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error("Error:", err.message);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="md:px-[10%] sm:px-[5%] px-2 py-4 mt-2 ">
@@ -66,6 +123,41 @@ export const ProductDetails = () => {
               ))}
               <span className="text-gray-500">( 230 reviews )</span>
             </div>
+            <div className="my-4 flex items-center gap-2">
+              <label htmlFor="">Delivery</label>
+              <input
+                type="number"
+                name="pincode"
+                value={deliveryPincode}
+                onChange={(e) => setDeliveryPincode(e.target.value)}
+                className="outline-none border-b-2 border-black p-2"
+                placeholder="Enter Delivery Pincode"
+              />
+              <button className="text-blue-500" onClick={checkServiceability}>
+                {loading ? "Checking..." : "Check"}
+              </button>
+            </div>
+
+            {serviceResponse && (
+              <div className="text-green-600 text-sm mt-2">
+                {serviceResponse.success ? (
+                  <>
+                    ✅ Delivery is available.
+                    <br />
+                    Mode: {serviceResponse.mode}
+                    <br />
+                    COD: {serviceResponse.cod ? "Available" : "Not Available"}
+                  </>
+                ) : (
+                  <>❌ Delivery not available.</>
+                )}
+              </div>
+            )}
+
+            {error && (
+              <div className="text-red-600 text-sm mt-2">❌ {error}</div>
+            )}
+
             <h2 className="md:text-3xl text-xl  font-semibold mt-6 ">
               Rs. 3,000/-
             </h2>
