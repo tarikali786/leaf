@@ -9,9 +9,13 @@ import ImageComponent from "../../component/image/ImageComponent";
 import { useMediaQuery } from "@mui/material";
 import { ShopCard } from "./shop-card";
 import { Link, useParams } from "react-router-dom";
-import axios from "axios";
+import { useSelector } from "react-redux";
 export const ProductDetails = () => {
   const { id } = useParams();
+  const { product } = useSelector((state) => state.leaf);
+
+  const productDetails = product?.find((item) => item?.documentId === id);
+  console.log(productDetails);
 
   const [deliveryPincode, setDeliveryPincode] = useState("");
   const [serviceResponse, setServiceResponse] = useState(null);
@@ -94,19 +98,23 @@ export const ProductDetails = () => {
           modules={[Pagination, Navigation]}
           className="md:w-[45%] w-full text-center  "
         >
-          {[1, 2, 3, 4, 5, 6].map((item, index) => (
+          {productDetails?.image?.map((item, index) => (
             <SwiperSlide key={index} className="">
-              <ImageComponent cardCss="md:w-[80%] w-[80%] h-[36vh] md:h-[50vh] m-auto" />
+              <ImageComponent
+                src={`${import.meta.env.VITE_Image_BASE_URL}${
+                  item?.formats?.thumbnail?.url
+                }`}
+                cardCss="md:w-[80%] w-[80%] h-[36vh] md:h-[50vh] m-auto"
+                imgCss="object-cover w-full h-full rounded-lg p-4"
+              />
             </SwiperSlide>
           ))}
         </Swiper>
         <div className="md:w-[55%] w-full ">
-          <h2 className="md:text-3xl text-xl font-semibold">GS-4321</h2>
-          <p className="mt-3 text-gray-700">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Soluta
-            consequatur modi beatae, a corrupti dicta? Modi reprehenderit magni
-            rerum aliquam.
-          </p>
+          <h2 className="md:text-3xl text-xl font-semibold">
+            {productDetails?.title}
+          </h2>
+          <p className="mt-3 text-gray-700">{productDetails?.description}</p>
           <div className="mt-4">
             <h5 className=" uppercase  text-sm  font-semibold mb-2 flex gap-2 ">
               Avg Customer Rating{" "}
@@ -159,7 +167,7 @@ export const ProductDetails = () => {
             )}
 
             <h2 className="md:text-3xl text-xl  font-semibold mt-6 ">
-              Rs. 3,000/-
+              ₹ {productDetails?.OrigialPrice}
             </h2>
             <div className="flex gap-4  mt-6">
               <button className="bg-blue-800 md:text-md text-sm uppercase text-white px-4 py-2 rounded-md cursor-pointer">
@@ -260,8 +268,8 @@ export const ProductDetails = () => {
         </h2>
 
         <div className="grid md:grid-cols-3 sm:grid-cols-2  gap-6 mt-4">
-          {[1, 2, 3].map((item, index) => (
-            <ShopCard key={index} id={index} />
+          {product?.slice(0, 3).map((item, index) => (
+            <ShopCard key={index} id={index} item={item} />
           ))}
         </div>
       </div>

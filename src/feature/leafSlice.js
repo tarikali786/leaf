@@ -19,7 +19,8 @@ const initialState = {
   cart: [],
   order: [],
   wishList: [],
-  product: [],
+  category: [],
+  feature: [],
 
   OrderItem: [{ item: [], totalPrice: 0, address: {}, paymentInfo: {} }],
 };
@@ -104,7 +105,7 @@ export const UpdateUserAddress = createAsyncThunk(
   }
 );
 
-export const fetchProductList = createAsyncThunk("shop/product", async () => {
+export const fetchCategoryList = createAsyncThunk("shop/product", async () => {
   try {
     const response = await get(`/products?populate=*`);
     return response.data;
@@ -113,6 +114,14 @@ export const fetchProductList = createAsyncThunk("shop/product", async () => {
   }
 });
 
+export const fetchFeaturetList = createAsyncThunk("shop/product", async () => {
+  try {
+    const response = await get(`/products?populate=*`);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+});
 const leafSlice = createSlice({
   name: "leaf",
   initialState,

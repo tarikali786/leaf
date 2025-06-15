@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 
 export const Shop = () => {
   const { product } = useSelector((state) => state.leaf);
+
   return (
     <div className="md:px-[10%] sm:px-[5%] px-2 py-4 mt-2   ">
       <h2 className="text-2xl font-semibold">Shop</h2>

@@ -31,10 +31,16 @@ export const ShopCard = ({ id, item }) => {
 
   return (
     <div
-      onClick={() => showProductDetails(id)}
+      onClick={() => showProductDetails(item?.documentId)}
       className="p-3 cursor-pointer shadow-2xl relative rounded-xl"
     >
-      <ImageComponent src={item?.image} cardCss="w-full h-[40vh]" />
+      <ImageComponent
+        src={`${import.meta.env.VITE_Image_BASE_URL}${
+          item?.image[0]?.formats?.thumbnail?.url
+        }`}
+        cardCss="w-full h-[36vh]"
+        imgCss="object-cover w-full h-full rounded-lg p-4"
+      />
 
       <div className="absolute top-4 right-4">
         <FavoriteIcon
@@ -49,8 +55,10 @@ export const ShopCard = ({ id, item }) => {
       </div>
 
       <div className="px-2 pt-2">
-        <h3 className="text-center text-xl">{item?.name || "Product Name"}</h3>
-        <p className="text-center text-gray-600">₹{item?.price || "0.00"}</p>
+        <h3 className="text-center text-md">{item?.title || "Product Name"}</h3>
+        <p className="text-center text-gray-600">
+          ₹{item?.OrigialPrice || "0.00"}
+        </p>
         <button
           onClick={handleAddToCart}
           className="bg-blue-800 w-full text-white mt-2 py-2 rounded-md flex justify-center items-center gap-2"

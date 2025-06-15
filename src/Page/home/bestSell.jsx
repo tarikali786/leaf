@@ -11,18 +11,12 @@ import ImageComponent from "../../component/image/ImageComponent";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import { useState } from "react";
 import { useMediaQuery } from "@mui/material";
-
-const products = [
-  { id: 1, img: Product1, name: "Product 1", price: "₹1,200.00" },
-  { id: 2, img: Product2, name: "Product 2", price: "₹1,500.00" },
-  { id: 3, img: Product3, name: "Product 3", price: "₹900.00" },
-  { id: 4, img: Product1, name: "Product 4", price: "₹2,000.00" },
-  { id: 5, img: Product1, name: "Product 5", price: "₹1,750.00" },
-];
+import { useSelector } from "react-redux";
 
 export const BestSell = () => {
   const [hideDetails, setHideDetails] = useState(false);
   const isMd = useMediaQuery("(min-width:768px)");
+  const { product } = useSelector((state) => state.leaf);
 
   return (
     <div className="md:px-[10%] md:h-[60vh] sm:px-[5%] px-2 py-4 md:mt-8 sm:mt-4 flex md:flex-row flex-col gap-6   justify-between">
@@ -48,7 +42,6 @@ export const BestSell = () => {
         </Link>
       </motion.div>
 
-      {/* Swiper Slider with 3 Cards at a Time */}
       <Swiper
         modules={[Navigation]}
         navigation
@@ -63,16 +56,19 @@ export const BestSell = () => {
           }
         }}
       >
-        {products.map((product) => (
+        {product?.map((product) => (
           <SwiperSlide key={product.id}>
-            <ImageComponent
-              src={product.img}
-              alt={product.name}
-              cardCss="md:h-[45vh]  rounded-md bg-[#B6B5B5]"
-              imgCss="size-44 object-contain"
-            />
-            <p className="sm:text-[18px] mt-2">{product.name}</p>
-            <span className="text-gray-500 text-sm">22</span>
+            <Link to={`/product/${product.documentId}`}>
+              <ImageComponent
+                src={`${import.meta.env.VITE_Image_BASE_URL}${
+                  product?.image[0]?.formats?.thumbnail?.url
+                }`}
+                alt={product.name}
+                cardCss="md:h-[45vh]  rounded-md bg-[#B6B5B5]"
+                imgCss="size-44 object-contain"
+              />
+              <p className="sm:text-[18px] mt-2">{product?.title}</p>
+            </Link>
           </SwiperSlide>
         ))}
       </Swiper>
