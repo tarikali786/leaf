@@ -7,9 +7,11 @@ export const Cart = () => {
 
   // Calculate total price
   const totalPrice = cart.reduce(
-    (acc, item) => acc + item.price * (item.quantity || 1),
+    (acc, item) => acc + item.OrigialPrice * (item.quantity || 1),
     0
   );
+
+  console.log(cart);
 
   return (
     <div className="md:px-[10%] sm:px-[5%] px-4 py-6">
@@ -38,9 +40,15 @@ export const Cart = () => {
               <span>Total:</span>
               <span>₹{totalPrice.toFixed(2)}</span>
             </div>
-            <button className="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg transition">
-              Proceed to Checkout
-            </button>
+            <div className="flex justify-center">
+              <Link
+                to="/order"
+                className="w-full text-center bg-green-600 hover:bg-green-700 text-white p-2  m-auto rounded-lg transition cursor-pointer"
+              >
+                Proceed to Checkout
+              </Link>
+            </div>
+
             <Link
               to="/shop"
               className="block text-center mt-4 text-blue-600 hover:underline"

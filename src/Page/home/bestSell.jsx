@@ -56,18 +56,22 @@ export const BestSell = () => {
           }
         }}
       >
-        {product?.map((product) => (
-          <SwiperSlide key={product.id}>
-            <Link to={`/product/${product.documentId}`}>
+        {product?.map((item) => (
+          <SwiperSlide key={item.id}>
+            <Link to={`/product/${item.documentId}`}>
               <ImageComponent
-                src={`${import.meta.env.VITE_Image_BASE_URL}${
-                  product?.image[0]?.formats?.thumbnail?.url
-                }`}
-                alt={product.name}
-                cardCss="md:h-[45vh]  rounded-md bg-[#B6B5B5]"
+                src={
+                  item?.image?.[0]?.formats?.thumbnail?.url
+                    ? `${import.meta.env.VITE_Image_BASE_URL}${
+                        item.image[0].formats.thumbnail.url
+                      }`
+                    : "/fallback-image.png" // Provide a fallback image path
+                }
+                alt={item.name}
+                cardCss="md:h-[45vh] rounded-md bg-[#B6B5B5]"
                 imgCss="size-44 object-contain"
               />
-              <p className="sm:text-[18px] mt-2">{product?.title}</p>
+              <p className="sm:text-[18px] mt-2">{item?.title}</p>
             </Link>
           </SwiperSlide>
         ))}

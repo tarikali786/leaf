@@ -25,12 +25,18 @@ import {
 } from "./Page";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { fetchProductList, fetchUserDetails } from "./feature/leafSlice";
+import {
+  fetchProductList,
+  fetchCategorytList,
+  fetchUserDetails,
+} from "./feature/leafSlice";
 import Loading from "./component/model/loading";
 
 function App() {
   const dispatch = useDispatch();
-  const { user, product, loading } = useSelector((state) => state.leaf);
+  const { user, product, loading, category } = useSelector(
+    (state) => state.leaf
+  );
   const id = localStorage.getItem("leafUserid");
 
   const fetchData = () => {
@@ -39,6 +45,10 @@ function App() {
     }
     if (product.length == 0) {
       dispatch(fetchProductList());
+    }
+    if (category?.length == 0) {
+      dispatch(fetchCategorytList());
+      
     }
   };
 

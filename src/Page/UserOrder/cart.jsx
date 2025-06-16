@@ -23,8 +23,8 @@ export const Cart = ({ setOrderValue }) => {
             </button>
           </div>
           <div className="grid md:grid-cols-3 sm:grid-cols-2  gap-6 ">
-            {[1, 2, 3, 4, 5, 6].map((item, index) => (
-              <CartCard setOrderValue={setOrderValue} key={index} id={index} />
+            {cart?.map((item, index) => (
+              <CartCard setOrderValue={setOrderValue} key={index} id={index} item={item} />
             ))}
           </div>
         </>

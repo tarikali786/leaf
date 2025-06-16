@@ -2,15 +2,22 @@ import { useEffect, useState } from "react";
 import ImageComponent from "../../component/image/ImageComponent";
 import { Link } from "react-router-dom";
 
-export const CartCard = ({ id, setOrderValue }) => {
+export const CartCard = ({ id, setOrderValue, item }) => {
   const handleOderSubmit = (e) => {
     e?.stopPropagation();
     setOrderValue(1);
   };
+
   return (
     <div className="p-3 shadow-2xl  rounded-xl">
-      <Link to={`/product/${id}`}>
-        <ImageComponent cardCss="w-full h-[26vh]" />
+      <Link to={`/product/${item?.documentId}`} className="p-3">
+        <ImageComponent
+          key={id}
+          src={`${import.meta.env.VITE_Image_BASE_URL}${
+            item?.image[0].formats.thumbnail.url
+          }`}
+          cardCss="w-full h-[26vh]"
+        />
       </Link>
 
       <div className="px-2 pt-2">

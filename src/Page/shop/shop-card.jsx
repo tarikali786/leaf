@@ -49,7 +49,7 @@ export const ShopCard = ({ id, item }) => {
           style={{
             width: "30px",
             height: "30px",
-            fill: isFavorite.includes(id) ? "green" : "white",
+            fill: isFavorite.includes(id) ? "green" : "gray",
           }}
         />
       </div>

@@ -20,7 +20,7 @@ const initialState = {
   order: [],
   wishList: [],
   category: [],
-  feature: [],
+  product: [],
 
   OrderItem: [{ item: [], totalPrice: 0, address: {}, paymentInfo: {} }],
 };
@@ -105,7 +105,7 @@ export const UpdateUserAddress = createAsyncThunk(
   }
 );
 
-export const fetchCategoryList = createAsyncThunk("shop/product", async () => {
+export const fetchProductList = createAsyncThunk("shop/product", async () => {
   try {
     const response = await get(`/products?populate=*`);
     return response.data;
@@ -114,14 +114,15 @@ export const fetchCategoryList = createAsyncThunk("shop/product", async () => {
   }
 });
 
-export const fetchFeaturetList = createAsyncThunk("shop/product", async () => {
+export const fetchCategorytList = createAsyncThunk("category", async () => {
   try {
-    const response = await get(`/products?populate=*`);
+    const response = await get(`/categories?populate=*`);
     return response.data;
   } catch (error) {
     return error;
   }
 });
+
 const leafSlice = createSlice({
   name: "leaf",
   initialState,
@@ -283,6 +284,18 @@ const leafSlice = createSlice({
       state.product = action.payload;
     });
     builder.addCase(fetchProductList.rejected, (state, action) => {
+      state.loading = false;
+    });
+
+    // Fetch CategorytList
+    builder.addCase(fetchCategorytList.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(fetchCategorytList.fulfilled, (state, action) => {
+      state.loading = false;
+      state.category = action.payload;
+    });
+    builder.addCase(fetchCategorytList.rejected, (state, action) => {
       state.loading = false;
     });
   },

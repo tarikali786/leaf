@@ -9,28 +9,19 @@ import ImageComponent from "../../component/image/ImageComponent";
 import { useMediaQuery } from "@mui/material";
 import { ShopCard } from "./shop-card";
 import { Link, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../../feature/leafSlice";
 export const ProductDetails = () => {
   const { id } = useParams();
   const { product } = useSelector((state) => state.leaf);
 
   const productDetails = product?.find((item) => item?.documentId === id);
-  console.log(productDetails);
 
   const [deliveryPincode, setDeliveryPincode] = useState("");
   const [serviceResponse, setServiceResponse] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
-  const isLg = useMediaQuery("(min-width:968px)"); // Large screens (lg)
-  const isMd = useMediaQuery("(min-width:568px) and (max-width:1023px)"); // Medium screens (md)
-  const isSm = useMediaQuery("(max-width:445px)");
-  const featuresData = [
-    { feature: "Feature 1", description: "Description 1" },
-    { feature: "Feature 2", description: "Description 2" },
-    { feature: "Feature 3", description: "Description 3" },
-    { feature: "Feature 4", description: "Description 4" },
-  ];
+  const dispatch = useDispatch();
   useEffect(() => {
     window.scrollTo(-0, -0);
   }, [id]);
@@ -83,6 +74,11 @@ export const ProductDetails = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleAddToCart = (e) => {
+    e.stopPropagation();
+    dispatch(addToCart({ ...productDetails, quantity: 1 }));
   };
 
   return (
@@ -170,7 +166,10 @@ export const ProductDetails = () => {
               ₹ {productDetails?.OrigialPrice}
             </h2>
             <div className="flex gap-4  mt-6">
-              <button className="bg-blue-800 md:text-md text-sm uppercase text-white px-4 py-2 rounded-md cursor-pointer">
+              <button
+                onClick={handleAddToCart}
+                className="bg-blue-800 md:text-md text-sm uppercase text-white px-4 py-2 rounded-md cursor-pointer"
+              >
                 Add To Cart
               </button>
               <button className="bg-green-600 md:text-md uppercase text-sm text-white px-4 py-2 rounded-md cursor-pointer">
@@ -180,7 +179,7 @@ export const ProductDetails = () => {
           </div>
         </div>
       </div>
-
+      {/* 
       <div className="md:mt-10 mt-6">
         <h2 className="md:text-2xl text-xl font-semibold">
           Product Information{" "}
@@ -220,9 +219,9 @@ export const ProductDetails = () => {
             </tbody>
           </table>
         </div>
-      </div>
+      </div> */}
 
-      <div className="mt-10">
+      {/* <div className="mt-10">
         <h2 className="md:text-2xl text-xl font-semibold flex items-center gap-2">
           Reviews{" "}
           <b className="text-primary">
@@ -260,7 +259,7 @@ export const ProductDetails = () => {
             ))}
           </Swiper>
         </div>
-      </div>
+      </div> */}
 
       <div className="py-4">
         <h2 className="md:text-2xl text-xl font-semibold uppercase">
