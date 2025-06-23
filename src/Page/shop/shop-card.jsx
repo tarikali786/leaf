@@ -36,7 +36,7 @@ export const ShopCard = ({ id, item }) => {
     >
       <ImageComponent
         src={`${import.meta.env.VITE_Image_BASE_URL}${
-          item?.image[0]?.formats?.thumbnail?.url
+          item?.image[0]?.url
         }`}
         cardCss="w-full h-[36vh]"
         imgCss="object-cover w-full h-full rounded-lg p-4"

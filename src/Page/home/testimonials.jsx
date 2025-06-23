@@ -28,7 +28,7 @@ export const Testimonials = () => {
         {[1, 2, 3, 4, 5].map((item, index) => (
           <SwiperSlide
             key={index}
-            className="bg-[var(--color-secondry)] rounded-xl md:p-10 sm:p-6 p-4 relative"
+            className="bg-[var(--color-secondry)] opacity-90 rounded-xl md:p-10 sm:p-6 p-4 relative"
           >
             <p className="text-gray-800">
               Lorem ipsum dolor sit amet consectetur adipisicing elit.

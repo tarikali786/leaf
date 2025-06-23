@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 
 export const Shop = () => {
   const { product } = useSelector((state) => state.leaf);
+console.log("Product in shop", product);
 
   return (
     <div className="md:px-[10%] sm:px-[5%] px-2 py-4 mt-2   ">

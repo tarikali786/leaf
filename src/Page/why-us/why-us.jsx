@@ -1,7 +1,6 @@
-import { useEffect, useRef, useState } from "react";
-import { create } from "@lottiefiles/lottie-interactivity";
-import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
+import React, { useEffect, useState, useRef } from "react";
+import { Player } from "@lottiefiles/react-lottie-player";
+import animationData from "../../assets/Lotie/Leaf.json";
 import {
   FaSeedling,
   FaGlobe,
@@ -9,11 +8,12 @@ import {
   FaMedkit,
   FaBiohazard,
 } from "react-icons/fa";
-import lottie from "lottie-web";
-import LineAnimation from "../../assets/Lotie/Leaf.json";
+import { useInView } from "react-intersection-observer";
+import { motion } from "framer-motion";
 
 export const WhyUs = () => {
-  const lottieContainer = useRef(null);
+  const [isAnimationComplete, setIsAnimationComplete] = useState(false);
+  const lottieRef = useRef(null);
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.3 });
   const [visibleCards, setVisibleCards] = useState(0);
 
@@ -22,64 +22,42 @@ export const WhyUs = () => {
       icon: <FaMedkit className="text-green-500 text-5xl" />,
       title: "Chemical-Free",
       desc: "Non-toxic for a healthier meal.",
-      className: "absolute top-68 left-28",
+      className: "lg:absolute top-5 left-64 ",
     },
     {
       icon: <FaHandsHelping className="text-green-500 text-5xl" />,
       title: "Community Support",
       desc: "Empowering tribal artisans and rural communities.",
-      className: "absolute bottom-30 left-8",
+      className: "lg:absolute top-60 left-20 z-0",
     },
     {
       icon: <FaSeedling className="text-green-500 text-5xl" />,
       title: "Natural & Biodegradable",
       desc: "100% natural and fully biodegradable.",
-      className: "absolute -bottom-26 left-50",
+      className: "lg:absolute bottom-30 left-40",
     },
     {
       icon: <FaGlobe className="text-green-500 text-5xl" />,
       title: "Eco-Friendly",
       desc: "Renewable and sustainable for a greener future.",
-      className: "absolute top-40 right-6",
+      className: "lg:absolute top-5 right-26",
     },
     {
       icon: <FaHandsHelping className="text-green-500 text-5xl" />,
       title: "Rural Livelihoods",
       desc: "Supporting communities and tribal artisans.",
-      className: "absolute bottom-50 right-6",
+      className: "lg:absolute top-60 right-26",
     },
     {
       icon: <FaBiohazard className="text-green-500 text-5xl" />,
       title: "Antibacterial",
       desc: "Naturally prevents bacteria growth.",
-      className: "absolute -bottom-26 right-60",
+      className: "lg:absolute bottom-30 right-50",
     },
   ];
 
   useEffect(() => {
     if (inView) {
-      // Load lottie
-      const lottieInstance = lottie.loadAnimation({
-        container: lottieContainer.current,
-        renderer: "svg",
-        loop: false,
-        autoplay: false,
-        animationData: LineAnimation,
-      });
-
-      // Create interactivity
-      create({
-        mode: "scroll",
-        player: lottieInstance,
-        actions: [
-          {
-            visibility: [0, 1],
-            type: "seek",
-            frames: [0, 180],
-          },
-        ],
-      });
-
       // Start card animation after 2s
       const timer = setTimeout(() => {
         cardsData.forEach((_, index) => {
@@ -90,14 +68,64 @@ export const WhyUs = () => {
       }, 2000);
 
       return () => {
-        lottieInstance.destroy();
         clearTimeout(timer);
       };
     }
   }, [inView]);
 
+  // Lock the scroll while animation is playing
+  useEffect(() => {
+    if (!isAnimationComplete) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto"; // Clean up on unmount
+    };
+  }, [isAnimationComplete]);
+
   return (
-    <div className="w-full overflow-hidden" ref={ref}>
+    <div className="w-full overflow-hidden z-10" ref={ref}>
+      <div className="relative discover-left-card mb-[0vh]  ">
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          className="lg:h-[100vh] h-[40vh]"
+        >
+          <Player
+            ref={lottieRef}
+            autoplay
+            keepLastFrame
+            src={animationData}
+            className="w-full lg:h-[80vh] h-[40vh]"
+            onEvent={(event) => {
+              if (event === "complete") {
+                setIsAnimationComplete(true);
+              }
+            }}
+          />
+        </div>
+        {cardsData.slice(0, visibleCards).map((card, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            whileHover={{ scale: 1.05 }}
+            className={`${card.className} flex flex-col items-center justify-center p-4 rounded-lg shadow-lg bg-white  `}
+          >
+            {card.icon}
+            <h4 className="mt-4 text-sm font-semibold">{card.title}</h4>
+            <p className="mt-2 text-gray-600 text-sm">{card.desc}</p>
+          </motion.div>
+        ))}
+      </div>
+
       <h2 className="text-3xl font-bold text-center my-12">ABOUT US</h2>
 
       <div className="flex justify-center my-6">
@@ -106,25 +134,6 @@ export const WhyUs = () => {
           biodegradable dining solutions through our high-quality Siali leaf
           plates...
         </p>
-      </div>
-
-      <div className="relative discover-left-card mb-[30vh]">
-        <div className="lottieContainer-caard" ref={lottieContainer}></div>
-
-        {cardsData.slice(0, visibleCards).map((card, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            whileHover={{ scale: 1.05 }}
-            className={`${card.className} flex flex-col items-center p-6 rounded-lg shadow-lg bg-white`}
-          >
-            {card.icon}
-            <h4 className="mt-4 text-xl font-semibold">{card.title}</h4>
-            <p className="mt-2 text-gray-600 text-sm">{card.desc}</p>
-          </motion.div>
-        ))}
       </div>
 
       <p className="text-lg leading-relaxed mt-8 text-center max-w-3xl m-auto py-10">

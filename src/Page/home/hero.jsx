@@ -5,7 +5,7 @@ import Banner from "../../assets/product 1/5.png";
 export const Hero = () => {
   return (
     <div className=" md:px-[10%] sm:px-[5%] px-2 py-4 ">
-      <div className="  bg-[var(--color-primary)]  rounded-xl md:px-8 md:pt-8 sm:px-4 sm:pt-4 px-4 pt-6  flex md:flex-row  flex-col  gap-6  justify-between  ">
+      <div className="  bg-[var(--color-primary)] opacity-90  rounded-xl md:px-8 md:pt-8 sm:px-4 sm:pt-4 px-4 pt-6  flex md:flex-row  flex-col  gap-6  justify-between  ">
         <div className="md:w-[65%] ">
           <h1 className="md:text-5xl sm:text-2xl text-xl leading-[1.3] font-bold text-black  ">
             Sustainable Tableware for a Greener Tomorrow
@@ -26,13 +26,8 @@ export const Hero = () => {
           </div>
           <Search />
         </div>
-        <div className="md:relative md:w-[35%]">
-          <div className="border  bg-black   w-full bottom-0 rounded-t-full pt-4 ">
-            <ImageComponent
-              src={Banner}
-              cardCss=" md:pt-4 md:pl-8  sm:pl-5 pl-2 w-full md:h-[60vh]"
-            />
-          </div>
+        <div className="md:relative md:w-[35%] mb-8  rounded-full  ">
+          <ImageComponent src={Banner} cardCss=" w-full h-full " />
         </div>
       </div>
     </div>

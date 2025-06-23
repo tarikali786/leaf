@@ -26,7 +26,7 @@ export const Search = () => {
     <div
       onMouseEnter={() => setItemListShow(true)}
       onMouseLeave={() => setItemListShow(false)}
-      className=" relative bg-white md:w-[60%] w-full mt-10 rounded-xl flex justify-between items-center pl-4 pr-1 md:py-3 py-2"
+      className=" relative bg-white md:w-[60%] w-full mt-10 border-2  border-black rounded-xl flex justify-between items-center pl-4 pr-1 md:py-3 py-2"
     >
       <input
         type="text"

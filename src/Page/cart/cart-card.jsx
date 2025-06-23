@@ -15,9 +15,7 @@ export const CartCard = ({ id, item }) => {
             item?.image?.map((img, index) => (
               <ImageComponent
                 key={index}
-                src={`${import.meta.env.VITE_Image_BASE_URL}${
-                  img.formats.thumbnail.url
-                }`}
+                src={`${import.meta.env.VITE_Image_BASE_URL}${img?.url}`}
                 cardCss="w-full xl:h-[36vh] md:h-[25vh] h-[12vh] bg-gray-200 rounded-lg p-4"
               />
             ))}

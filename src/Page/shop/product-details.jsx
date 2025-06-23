@@ -97,9 +97,7 @@ export const ProductDetails = () => {
           {productDetails?.image?.map((item, index) => (
             <SwiperSlide key={index} className="">
               <ImageComponent
-                src={`${import.meta.env.VITE_Image_BASE_URL}${
-                  item?.formats?.thumbnail?.url
-                }`}
+                src={`${import.meta.env.VITE_Image_BASE_URL}${item?.url}`}
                 cardCss="md:w-[80%] w-[80%] h-[36vh] md:h-[50vh] m-auto"
                 imgCss="object-cover w-full h-full rounded-lg p-4"
               />
