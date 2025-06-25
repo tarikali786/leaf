@@ -54,25 +54,29 @@ export const BestSell = () => {
           }
         }}
       >
-        {product?.map((item) => (
-          <SwiperSlide key={item.id}>
-            <Link to={`/product/${item.documentId}`} className="flex flex-col items-center justify-center ">
-              <ImageComponent
-                src={
-                  item?.image?.[0]?.formats?.large?.url
-                    ? `${import.meta.env.VITE_Image_BASE_URL}${
-                        item.image[0].formats?.large?.url
-                      }`
-                    : "/fallback-image.png" // Provide a fallback image path
-                }
-                alt={item.name}
-                cardCss="md:h-[45vh] rounded-md border-2 border-gray-200 hover:shadow-lg transition-shadow duration-300"
-                imgCss=" object-contain"
-              />
-              <p className="sm:text-[18px] mt-2">{item?.title}</p>
-            </Link>
-          </SwiperSlide>
-        ))}
+        {Array.isArray(product) &&
+          product.map((item) => (
+            <SwiperSlide key={item.id}>
+              <Link
+                to={`/product/${item.documentId}`}
+                className="flex flex-col items-center justify-center "
+              >
+                <ImageComponent
+                  src={
+                    item?.image?.[0]?.formats?.large?.url
+                      ? `${import.meta.env.VITE_Image_BASE_URL}${
+                          item.image[0].formats?.large?.url
+                        }`
+                      : "/fallback-image.png"
+                  }
+                  alt={item.name}
+                  cardCss="md:h-[45vh] rounded-md border-2 border-gray-200 hover:shadow-lg transition-shadow duration-300"
+                  imgCss=" object-contain"
+                />
+                <p className="sm:text-[18px] mt-2">{item?.title}</p>
+              </Link>
+            </SwiperSlide>
+          ))}
       </Swiper>
     </div>
   );
