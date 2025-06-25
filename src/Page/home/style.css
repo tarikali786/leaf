@@ -8,8 +8,7 @@
   }
 }
 .swiper-pagination-horizontal {
-  /* bottom: -1rem !important; */
-  display: none;
+  bottom: 0rem !important;
 }
 
 .category-card {

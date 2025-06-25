@@ -59,7 +59,7 @@ export const Categories = () => {
                       />
                     ) : (
                       <ImageComponent
-                        src="http://13.127.210.28:1337/uploads/thumbnail_6_3941d44fee.png"
+                        src="http://13.204.64.227:1337/uploads/thumbnail_6_3941d44fee.png"
                         alt="imt"
                         cardCss="h-[60vh]  rounded-xl overflow-hidden category-card "
                         imgCss="object-fill w-[80%] h-[80%] p-4"
