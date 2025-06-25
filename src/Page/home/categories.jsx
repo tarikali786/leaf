@@ -46,29 +46,32 @@ export const Categories = () => {
               }}
               className=""
             >
-              {category?.map((item, index) => (
-                <SwiperSlide key={index} className="">
-                  {item?.image?.formats?.large?.url ? (
-                    <ImageComponent
-                      src={`${import.meta.env.VITE_Image_BASE_URL}${
-                        item.image.formats?.large?.url
-                      }`}
-                      alt="imt"
-                      cardCss="h-[60vh]  rounded-xl overflow-hidden category-card "
-                    />
-                  ) : (
-                    <ImageComponent
-                      src="http://13.127.210.28:1337/uploads/thumbnail_6_3941d44fee.png"
-                      alt="imt"
-                      cardCss="h-[60vh]  rounded-xl overflow-hidden category-card "
-                      imgCss="object-fill w-[80%] h-[80%] p-4"
-                    />
-                  )}
-                  <div className="text-center mt-4">
-                    <h3 className="text-[15px] font-semibold">{item?.Name}</h3>
-                  </div>
-                </SwiperSlide>
-              ))}
+              {Array.isArray(category) &&
+                category?.map((item, index) => (
+                  <SwiperSlide key={index} className="">
+                    {item?.image?.formats?.large?.url ? (
+                      <ImageComponent
+                        src={`${import.meta.env.VITE_Image_BASE_URL}${
+                          item.image.formats?.large?.url
+                        }`}
+                        alt="imt"
+                        cardCss="h-[60vh]  rounded-xl overflow-hidden category-card "
+                      />
+                    ) : (
+                      <ImageComponent
+                        src="http://13.127.210.28:1337/uploads/thumbnail_6_3941d44fee.png"
+                        alt="imt"
+                        cardCss="h-[60vh]  rounded-xl overflow-hidden category-card "
+                        imgCss="object-fill w-[80%] h-[80%] p-4"
+                      />
+                    )}
+                    <div className="text-center mt-4">
+                      <h3 className="text-[15px] font-semibold">
+                        {item?.Name}
+                      </h3>
+                    </div>
+                  </SwiperSlide>
+                ))}
             </Swiper>
           </div>
         </div>
