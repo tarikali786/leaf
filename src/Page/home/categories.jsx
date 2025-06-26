@@ -1,8 +1,14 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import { EffectCoverflow, Pagination, Autoplay } from "swiper/modules";
+import {
+  EffectCoverflow,
+  Pagination,
+  Autoplay,
+  Navigation,
+} from "swiper/modules";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import "./style.css";
 import "swiper/css";
+import "swiper/css/navigation";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 import ImageComponent from "../../component/image/ImageComponent";
@@ -28,6 +34,7 @@ export const Categories = () => {
               effect={"coverflow"}
               grabCursor={true}
               centeredSlides={true}
+              navigation={true}
               slidesPerView={isSm ? 1 : isMd ? 2 : 3}
               coverflowEffect={{
                 rotate: 50,
@@ -38,13 +45,14 @@ export const Categories = () => {
               }}
               pagination={{
                 dynamicBullets: true,
+                clickable: true,
               }}
-              modules={[EffectCoverflow, Pagination, Autoplay]}
+              modules={[EffectCoverflow, Pagination, Autoplay, Navigation]}
               autoplay={{
                 delay: 5000,
                 disableOnInteraction: false,
               }}
-              className=""
+              className="flax gap-10"
             >
               {Array.isArray(category) &&
                 category?.map((item, index) => (

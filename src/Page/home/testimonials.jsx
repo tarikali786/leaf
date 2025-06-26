@@ -5,7 +5,7 @@ import "./style.css";
 import Testimonial1 from "../../assets/testimonial1.png";
 import Quote from "../../assets/icons8-quote-40.png";
 import StarSharpIcon from "@mui/icons-material/StarSharp";
-import { Pagination } from "swiper/modules";
+import { Pagination, Navigation } from "swiper/modules";
 import ImageComponent from "../../component/image/ImageComponent";
 export const Testimonials = () => {
   return (
@@ -21,8 +21,9 @@ export const Testimonials = () => {
           clickable: true,
         }}
         slidesPerView={"auto"}
+        navigation={true}
         spaceBetween={100}
-        modules={[Pagination]}
+        modules={[Pagination, Navigation]}
         className="mt-10 cursor-grab"
       >
         {[1, 2, 3, 4, 5].map((item, index) => (

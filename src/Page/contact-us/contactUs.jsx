@@ -71,7 +71,7 @@ export const ContactUs = () => {
             key={currentIndex}
             src={images[currentIndex]}
             alt={`Slide ${currentIndex}`}
-            className="absolute top-0 left-0 -z-10 object-cover h-full w-full"
+            className="absolute top-0 left-0 -z-10 object-contain h-full w-full"
             variants={transitionVariants}
             initial="initial"
             animate="animate"
