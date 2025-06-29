@@ -17,12 +17,34 @@ export const ContactUs = () => {
     return () => clearInterval(intervalId);
   }, [images.length]);
 
-  // Smooth fade with a slight zoom-out effect
+  // Transition variants for slideshow
   const transitionVariants = {
     initial: { opacity: 0, scale: 0.9 },
     animate: { opacity: 1, scale: 0.95, transition: { duration: 1, ease: "easeInOut" } },
     exit: { opacity: 0, scale: 0.9, transition: { duration: 1, ease: "easeInOut" } },
   };
+
+  // Define offices
+  const offices = [
+    {
+      name: "Head Office",
+      phone: "+91-8919123748",
+      address: "5, 5-400/733, Prashanth Nagar, Vanasthalipuram, Hyderabad, Telangana 500070",
+      mapSrc: "https://www.google.com/maps?q=H.+no:+5,+Halo+Leaf+Plates,+Ashirvad+Nilayam,+2-175%2F24%2625,+Road+No.4,+Gandhi+Nagar+South+Colony,+Vanasthalipuram,+Hyderabad,+Telangana+500070&output=embed", // replace with actual
+    },
+    {
+      name: "Branch Office",
+      phone: "+91-8919123748",
+      address: "H. no: 5, Ashirvad Nilayam, 2-175/ 24&25, Road No.4, Gandhi Nagar South Colony, Vanasthalipuram, Hyderabad, Telangana 500070",
+      mapSrc: "https://www.google.com/maps?q=H.+no:+5,+Halo+Leaf+Plates,+Ashirvad+Nilayam,+2-175%2F24%2625,+Road+No.4,+Gandhi+Nagar+South+Colony,+Vanasthalipuram,+Hyderabad,+Telangana+500070&output=embed",
+    },
+    // {
+    //   name: "Regional Office",
+    //   phone: "+91-9988776655",
+    //   address: "789 Market Ave, City C, State, India",
+    //   mapSrc: "https://www.google.com/maps/embed?pb=!1m18!...YOUR_EMBED_CODE_3...",
+    // },
+  ];
 
   const faqs = [
     {
@@ -65,6 +87,8 @@ export const ContactUs = () => {
   return (
     <div className="md:px-[10%] sm:px-[5%] px-2 py-4 mt-2">
       <h2 className="md:text-2xl text-xl font-semibold">CONTACT US</h2>
+
+      {/* Image Slideshow */}
       <div className="rounded-xl overflow-hidden mt-4 relative md:h-[60vh] h-[40vh]">
         <AnimatePresence exitBeforeEnter>
           <motion.img
@@ -79,24 +103,30 @@ export const ContactUs = () => {
           />
         </AnimatePresence>
       </div>
-      <div className="grid md:grid-cols-4 sm:grid-cols-2 text-center mt-5 md:gap-2 gap-6">
-        <div>
-          <h3 className="md:text-lg font-semibold text-gray-800">Phone Number</h3>
-          <p className="mt-1">+91-9876543212</p>
-        </div>
-        <div>
-          <h3 className="md:text-lg font-semibold text-gray-800">EMAIL ADDRESS</h3>
-          <p className="mt-1">electmyscooter@gmail.com</p>
-        </div>
-        <div>
-          <h3 className="md:text-lg font-semibold text-gray-800">OFFICE ADDRESS</h3>
-          <p className="mt-1">LINE 1 LINE 2 LINE 3</p>
-        </div>
-        <div>
-          <h3 className="md:text-lg font-semibold text-gray-800">GST NUMBER || IMPORTANT NUMBER</h3>
-          <p className="mt-1">NUMBER 1</p>
-        </div>
+
+      {/* Office Details and Maps */}
+      <div className="mt-8 grid md:grid-cols-3 sm:grid-cols-1 gap-6">
+        {offices.map((office, idx) => (
+          <div key={idx} className="border rounded-lg overflow-hidden p-4">
+            <h3 className="text-lg font-semibold text-gray-800 mb-2">{office.name}</h3>
+            <p><strong>Phone:</strong> {office.phone}</p>
+            <p className="mb-2"><strong>Address:</strong> {office.address}</p>
+            <div className="w-full h-48">
+              <iframe
+                src={office.mapSrc}
+                width="100%"
+                height="100%"
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title={`Map - ${office.name}`}
+              ></iframe>
+            </div>
+          </div>
+        ))}
       </div>
+
+      {/* FAQ Section */}
       <div className="mt-8">
         <h2 className="md:text-2xl text-xl font-semibold mb-4">FAQ</h2>
         {faqs.map((faq, index) => (
